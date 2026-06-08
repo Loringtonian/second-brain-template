@@ -39,8 +39,8 @@
 
 ## RECURRING OBSESSIONS (with evidence + quotes)
 
-`__FILL_FROM_USER__:obsessions_full`
-<!-- For each recurring theme: a one-paragraph description + 1–3 verbatim quotes from
+<!-- __FILL_FROM_USER__:obsessions_full — FILL AFTER your first ingestion pass; mined from real content, not set at setup.
+     For each recurring theme: a one-paragraph description + 1–3 verbatim quotes from
      their own notes/journals, with source + date. These are the load-bearing
      connective threads of the whole brain. -->
 
@@ -53,27 +53,27 @@
 
 ## PREDICTIONS THEY'VE MADE
 
-`__FILL_FROM_USER__:predictions`
-<!-- Forward-looking claims they've committed to, with dates/timelines. Useful for the
+<!-- __FILL_FROM_USER__:predictions — FILL as you make them / after content mining; not set at setup.
+     Forward-looking claims they've committed to, with dates/timelines. Useful for the
      agent to surface "you predicted X — still hold?" -->
 
 ## PROJECTS (full, with content-routing keywords)
 
-`__FILL_FROM_USER__:projects_full`
-<!-- Every meaningful project: what it is, why it matters to them, current status, and
+<!-- __FILL_FROM_USER__:projects_full — FILL as projects accrue / after content mining; not set at setup.
+     Every meaningful project: what it is, why it matters to them, current status, and
      the recognition keywords that route content to it. Cross-reference
      STATE_OF_SECOND_BRAIN.md for live tiering. -->
 
 ## RECOGNITION KEYWORDS BY PROJECT
 
-`__FILL_FROM_USER__:recognition_keywords`
-<!-- A lookup: keyword/phrase → which project it belongs to. This is what the
+<!-- __FILL_FROM_USER__:recognition_keywords — FILL after projects + content exist; not set at setup.
+     A lookup: keyword/phrase → which project it belongs to. This is what the
      second-brain-guide agent uses to answer "what project owns keyword W?". -->
 
 ## THE TENSIONS THEY HOLD
 
-`__FILL_FROM_USER__:tensions`
-<!-- The genuine contradictions they live with (e.g. a value in tension with a habit,
+<!-- __FILL_FROM_USER__:tensions — FILL after a few sessions of real material; not set at setup.
+     The genuine contradictions they live with (e.g. a value in tension with a habit,
      two goals that pull opposite ways). Naming these lets an agent engage honestly
      instead of flattening them. -->
 

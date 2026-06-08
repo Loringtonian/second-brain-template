@@ -90,6 +90,12 @@ makes a second brain actually stick. Wire up dictation and make voice your defau
 - **3D / CAD** → **Blender** (MCP) + **ForgeCAD** (parametric `.forge.js` models).
 - **Messaging capture** → **Hermes** — bridges Telegram / WhatsApp / Discord / Signal into the brain as a comms layer.
 
+### Passive capture — your own trail, pulled in
+The template ships **no scraper**. Passive capture is your own data plus a puller the agent builds on request:
+- **X / Twitter** → download your archive from X (Settings → *Download an archive of your data*), then run `/ingest-brain-dump` on it. Export your data; don't scrape.
+- **Reading & highlights** (Readwise, Kindle, Pocket, RSS) → ask the agent to *build you a puller* using the `/media-pipeline-example` pattern (detect → process → enrich → file) and your service key in `.env` (e.g. `READWISE_API_KEY`). It files attributed Template B entries.
+- Once a puller exists, schedule it (cron / launchd) so capture keeps happening without you lifting a finger.
+
 ## Keys, voice & privacy depth
 
 - **API keys live in `.env`** (gitignored). `cp .env.example .env` and fill what you use —

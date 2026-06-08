@@ -18,8 +18,8 @@
 - [ ] _(item)_
 
 ## Per-project TODO files
-`__FILL_FROM_USER__:project_todo_index`
-<!-- A pointer list: each active project → its TODO_<Proj>.md path. The actual tasks
+<!-- __FILL_FROM_USER__:project_todo_index — FILL as projects are created; each /new-project adds a row here. Not set at setup.
+     A pointer list: each active project → its TODO_<Proj>.md path. The actual tasks
      live in those files; this is just the index. -->
 
 | Project | TODO file |

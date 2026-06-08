@@ -43,6 +43,9 @@ Before interviewing, get the tooling working so the brain can run its own script
 - **Create a virtualenv + install dependencies** — from the repo root:
   `python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt`. This makes the
   bundled scripts (`/remove-watermark`, the `/nano-banana` image skills) run out of the box.
+- **Create the owner's scratch files** — `cp .env.example .env` and `cp MEMORY.example.md MEMORY.md`
+  (both gitignored). `.env` holds the keys you'll wire in Phase 5; `MEMORY.md` is the owner's
+  portable cross-session memory (`@`-imported by `CLAUDE.md`) — you'll seed it at the end.
 - Do this automatically; only surface a manual step if something genuinely can't be set up for them
   (no system Python, a wheel that won't build). Then continue to the interview.
 
@@ -70,8 +73,12 @@ Fill the always-loaded identity doc. Ask, a few at a time:
 - one-line self-description; background/throughline; 3–6 core beliefs ("what do you believe that
   most people you know don't?"); recurring obsessions; what kind of idea makes you lean in vs tune
   out; your active projects (name + one line each).
-Write into `Orientation_Docs/INTELLECTUAL_LANDSCAPE_LITE.md` (and seed the fuller
-`INTELLECTUAL_LANDSCAPE.md` if they want to go deep). Preserve their exact words — no paraphrasing.
+Write into `Orientation_Docs/INTELLECTUAL_LANDSCAPE_LITE.md`, and **also seed the full
+`INTELLECTUAL_LANDSCAPE.md`** — `who_i_am_full`, `worldview_full`, and `influences` ("whose ideas
+shaped you most?") — and `COGNITIVE_PROFILE.md` `strengths_and_friction` (from their Phase-2 gaps).
+Preserve their exact words — no paraphrasing. The deeper landscape fields that need *mined* content
+(obsessions-with-evidence, predictions, tensions, keyword mines) ship as breadcrumb comments — leave
+them; they get filled after real content lands, not at setup.
 
 ### Phase 4 — Voice
 Ask them to paste **3–10 short pieces of their own writing** they feel "sound like me," and what to
@@ -89,8 +96,9 @@ everything. **Read the "Companion tools" catalog in `SETUP.md` first**, then wal
 
 - **Ask what they do** (AskUserQuestion, multi-select): which of these are part of their world —
   *coding & shipping · media or podcasts · deploying services · 3D / CAD · messaging capture ·
-  image generation · semantic search over their own notes*? Their answers tell you which catalog
-  rows matter, so you recommend the right tools instead of dumping the whole list.
+  reading / highlights sync (Readwise · Kindle · RSS) · image generation · semantic search over
+  their own notes*? Their answers tell you which catalog rows matter, so you recommend the right
+  tools instead of dumping the whole list.
 - **For each workflow they pick, surface the matching tool** and help set it up: the key in `.env`
   (`cp .env.example .env`), the install one-liner, or the connector toggle. (image gen →
   `GEMINI_API_KEY`; coding → gstack via `./setup`, needs Bun; media → ffmpeg + yt-dlp; deploys →
@@ -100,6 +108,15 @@ everything. **Read the "Companion tools" catalog in `SETUP.md` first**, then wal
   protocol in `CLAUDE.md`), an **embedding engine** for semantic search, and **ripgrep + jq**.
 - **The connectors** (Gmail / Drive / Calendar / Notion) are zero-install — mention they can toggle
   them on in Claude settings to pull their real life into the brain.
+- **If they picked reading / highlights** (or want passive capture): point them at the **Passive
+  capture** note in `SETUP.md`. No scraper ships — for X, they download their own archive from X
+  and run `/ingest-brain-dump`; for Readwise/Kindle/RSS, the agent *builds a puller on request*
+  using the `/media-pipeline-example` pattern + a key in `.env` (e.g. `READWISE_API_KEY`).
+- **Capture a few small identifiers while you're here** (AskUserQuestion, batch): their
+  **X/Twitter handle** (→ `launch-idea` `x_handle`, for drafting launch posts), the **command that
+  opens their browser** (→ `CLAUDE.md` `browser_harness_path` + `html-tweaker` `browser_open_command`),
+  and their **flagship writing/creative project** if they have one (→ `CONTENT_TAXONOMY.md`
+  `flagship_writing_project`). Skip any that don't apply.
 - **"Any 'superpowers' (custom skills) you want wired in?"** Note them under `CLAUDE.md`
   `__FILL_FROM_USER__:domain_skills` and in `SETUP.md`.
 
@@ -116,7 +133,10 @@ capture. Ask (AskUserQuestion, batch 2–4):
   just relaunch (local model servers, dev servers, build watchers) vs which apps are interactive and
   must *never* be auto-killed (your editor, agent CLI, browser).
 - **Disk + drives** — internal disk size, and any external drive you use for archival (that's what
-  `/disk-cleanup` Phase 2 tars big folders to).
+  `/disk-cleanup` Phase 2 tars big folders to). Note any large archival folder it should target
+  → `disk-cleanup` `large-archival-folder`.
+- **Timezone** — their IANA timezone (e.g. `America/Toronto`). Write it to `.env` as
+  `SECOND_BRAIN_TZ` (used by `scripts/tz.py`) and to `Orientation_Docs/ORIENTATION.md` `timezone`.
 - **Phone** — iOS or Android (it shapes your capture / inbox tooling and which apps you sync from).
 - **Other tooling** — GPUs, key CLIs, local model stores — anything the agent should be
   resource-aware of.
@@ -137,13 +157,39 @@ Read `Orientation_Docs/PRIVACY_DEPTH.md` with them, then run its calibration loo
 - Show them `scripts/stamp_depth.py <file> <N>` so they can stamp as they create files, and note the
   publish rule (ship depth ≤ 2, review 3, keep 4–5 private).
 
-### Phase 8 — Folders
+### Phase 8 — Folders & sources
 The content folders ship as empty stubs. Ask (AskUserQuestion) which fit their life — prune the ones
 they won't use, and capture any custom folders at `FOLDER_ORIENTATION.md` `__FILL_FROM_USER__:custom_folders`.
+Also ask, batched:
+- **Protected / read-only originals** — any folder of irreplaceable source material that must never be
+  modified? → `CLAUDE.md` `protected_folders` and `sync-orientation-docs` `protected_readonly_path`.
+- **Where their original thinking lives** — voice notes, dictation, a notes-app export, daily
+  transcripts? → `Orientation_Docs/ORIENTATION.md` `original_thinking_sources`.
+- **External_Sources subfolders** they'll actually use (podcast clips, bookmarks, research) →
+  `connection-finder` `external_source_subfolders`.
+
+### Phase 9 — Make the spec yours
+`INTENT_SPEC.md` has two halves: a fixed **architecture intent** (what this kind of brain is and why)
+and the **Owner Intent** slots you filled in Phases 1–5. Walk the owner through the architecture-intent
+prose once and invite them to **re-author any of it in their own words** — this is *their* brain's spec
+now, not the template's. Some owners keep it verbatim; some rewrite it wholesale. Both are right. (If
+they want a clean break, offer to replace the shipped spec with one authored from scratch in their voice.)
 
 ## Finishing
+- **Initialize the status docs — no interview, just sensible fresh-brain defaults.** Write today's date
+  and a "just started" state into the markers that load on "what should I work on," so the owner's first
+  status query never surfaces a raw `__FILL_FROM_USER__`:
+  - `CLAUDE.md`: `current_status` → "Phase 1 (Ingestion): just started — finish `/setup`, then `/ingest-brain-dump`."; `active_reminders` → an empty checklist with a guidance comment.
+  - `STATE_OF_SECOND_BRAIN.md`: `current_phase` → "Phase 1 — Ingestion (fresh brain, no content filed yet)"; `last_updated` → today; `blockers` → "None yet"; `shipped` → "Nothing yet"; `maintenance_schedule` → their pick (default: weekly, Sundays).
+  - `TODO_MASTER.md` + `TODO_Second_Brain.md`: `last_updated` → today; top item → "[ ] Finish `/setup`, then run your first `/ingest-brain-dump`"; backlog empty.
+  - `last_updated` in `KEYWORD_GUIDE.md`, `CONTENT_TAXONOMY.md`, `ORIENTATION.md`, `SECOND_BRAIN_MASTER_INDEX.md` → today.
+  - `COGNITIVE_PROFILE.md` `model` → the model running this setup + today's date; `ROUTER.md` `subprojects_with_claude_md` and `special_role_docs` → empty lists (comment: "add as you create them").
+- **Seed `MEMORY.md`** from what you learned this interview: their inviolable rules → the Hard-rules
+  section; a couple of about-me pointers; their workflow preferences (terse? runs commands themselves?
+  ask before deploying?). One terse line each.
 - Regenerate the worksheet so line numbers stay honest (re-scan `__FILL_FROM_USER__` across the tree
-  and rewrite `PERSONALIZE.md`), then show the user what's still unfilled.
+  and rewrite `PERSONALIZE.md`), then show the user what's still unfilled — and note that the remaining
+  ones are **content-first breadcrumbs** (project rosters, keyword mines), not things they forgot.
 - Tell them the routing already works now, and that they can deepen `INTELLECTUAL_LANDSCAPE.md`,
   `VOICE_GUIDE.md`, and the depth calibration any time by re-running `/setup`.
 - Hand off to `/ingest-brain-dump` for their first real content.
@@ -151,4 +197,8 @@ they won't use, and capture any custom folders at `FOLDER_ORIENTATION.md` `__FIL
 ## Verification (before you call setup "done for now")
 Confirm: you used AskUserQuestion (not prose) for every phase you ran; Phase 1 (purpose) and Phase 2
 (gaps) were asked and written; the owner one-liner + landscape-lite have real content; any API keys
-they gave went into `.env` (gitignored), not into a tracked file.
+they gave went into `.env` (gitignored), not into a tracked file; **the status docs
+(`STATE_OF_SECOND_BRAIN`, `TODO_MASTER`, `CLAUDE.md` `current_status`) were initialized**, so a fresh
+"what should I work on?" shows no raw markers; **`MEMORY.md` exists** (copied from `MEMORY.example.md`)
+and carries at least their hard rules; and a final `grep -rn "__FILL_FROM_USER__" .` shows every
+remaining marker is either filled or inside a breadcrumb comment — no naked Tier-0/Tier-1 placeholders.

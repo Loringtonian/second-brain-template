@@ -90,7 +90,7 @@ One paragraph: did the sync find coherent-but-stale docs, incoherent docs, or a 
 <approach>
 This is a genuinely multi-stage rigid workflow; follow it in order.
 
-**Phase 1 — Read the brain's nav layer.** Glob `$SECOND_BRAIN_ROOT/Orientation_Docs/*.md` and Read every file it returns. This skill is the exception to the tier system — it must read every orientation doc because its job is to sync them against each other. Also read `Second_Brain/CLAUDE.md` (skills table, active reminders) and `ROUTER.md` (tier rules). Run `python3 $SECOND_BRAIN_ROOT/scripts/update_counts.py` to get authoritative file counts.
+**Phase 1 — Read the brain's nav layer.** Glob `$SECOND_BRAIN_ROOT/Orientation_Docs/*.md` and Read every file it returns. This skill is the exception to the tier system — it must read every orientation doc because its job is to sync them against each other. Also read `$SECOND_BRAIN_ROOT/CLAUDE.md` (skills table, active reminders) and `ROUTER.md` (tier rules). Run `python3 $SECOND_BRAIN_ROOT/scripts/update_counts.py` to get authoritative file counts.
 
 **Phase 2 — Build the mental map of what changed.** From the Actions Taken block, enumerate every concrete thing that moved: file created, file deleted, folder renamed, skill edited, config changed, status transitioned. For each action, list the direct doc targets (count changes → MASTER_INDEX + STATE; folder changes → MASTER_INDEX + any doc that names the folder; status changes → STATE + PROCESSING_PLAN; skill changes → CLAUDE.md skills table; router rule changes → ROUTER.md).
 

@@ -17,6 +17,7 @@
 
 @Orientation_Docs/ROUTER.md
 @Orientation_Docs/INTELLECTUAL_LANDSCAPE_LITE.md
+@MEMORY.md
 
 ---
 
@@ -220,6 +221,8 @@ This Second Brain Template ships the **architecture-generic** skills below; only
 | "what connects to", "related ideas"      | `/connection-finder`    |
 | "group related ideas"                    | `/group-related-ideas`  |
 
+> *The semantic skills above (`/semantic-search`, `/verify-idea`, `/explore-second-brain`, `/connection-finder`) work from day one via keyword `grep`, and get **semantic** once you implement the `scripts/sb_embed.py` embedding stub on your own content — see `SETUP.md`.*
+
 **Generation & ideation**
 
 | User says... | Skill |
@@ -235,7 +238,7 @@ This Second Brain Template ships the **architecture-generic** skills below; only
 | "set up", "personalize", "make this mine"| `/setup` (first-run interview) |
 | "new project", "scaffold project"        | `/new-project`          |
 | "project tracker", "project status"      | `/project-tracker`      |
-| "load brain", "full context"             | `/load-brain`           |
+| "load brain", "full context" *(needs setup)* | `/load-brain`           |
 | "extract todos"                          | `/extract-todo`         |
 | "sync orientation docs"                  | `/sync-orientation-docs`|
 | "weekly maintenance", "maintenance"      | `/weekly-maintenance`   |
@@ -297,7 +300,7 @@ Context loads in tiers. `Orientation_Docs/ROUTER.md` is the decision guide and i
 - **CLAUDE.md** — this file (hard rules, skills table, active reminders)
 - **Orientation_Docs/ROUTER.md** — tier decision rules
 - **Orientation_Docs/INTELLECTUAL_LANDSCAPE_LITE.md** — distilled "who the owner is"
-- Global **MEMORY.md** — cross-session user memory
+- **MEMORY.md** — your portable cross-session memory (`@`-imported above). Copy it from `MEMORY.example.md` on first run (`cp MEMORY.example.md MEMORY.md`); it's gitignored because it accrues personal facts. Distinct from Claude Code's native `~/.claude/projects/<project>/memory/` store — this one travels with the repo.
 
 ### Tier 1 — Brain nav / status / what's-next (ROUTER Rule 2)
 Loaded when user asks "what's next", project status, folder routing, near-term direction:

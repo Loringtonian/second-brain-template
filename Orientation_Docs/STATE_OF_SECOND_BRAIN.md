@@ -24,8 +24,8 @@
 
 ## Project Tiers
 
-`__FILL_FROM_USER__:project_tiers`
-<!-- The roster that answers "what should I work on?". A table by activity tier.
+<!-- __FILL_FROM_USER__:project_tiers — FILL after your first project exists; each /new-project adds a row. Not set at setup.
+     The roster that answers "what should I work on?". A table by activity tier.
      Tier 1 = active now; lower tiers = ongoing / high-priority-inactive / on-roster /
      parked. Each row: project — one-line state — next action. -->
 

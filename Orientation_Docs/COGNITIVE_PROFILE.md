@@ -22,15 +22,15 @@
 
 ## How the owner engages with ideas
 
-`__FILL_FROM_USER__:engagement_profile`
-<!-- Synthesize: what kinds of ideas they lean into vs tune out, how they prefer
+<!-- __FILL_FROM_USER__:engagement_profile — FILL after 3+ real sessions (run /sync-orientation-docs); AI-synthesized from observed behavior, not set at setup.
+     Synthesize: what kinds of ideas they lean into vs tune out, how they prefer
      information surfaced (density, structure, framing), their decision style. This
      extends the ENGAGEMENT PATTERNS in INTELLECTUAL_LANDSCAPE_LITE with reasoning. -->
 
 ## Thinking patterns
 
-`__FILL_FROM_USER__:thinking_patterns`
-<!-- Recurring moves in how they reason — e.g. inversion, scale-hopping, analogy,
+<!-- __FILL_FROM_USER__:thinking_patterns — FILL after content mining; observed across real material, not set at setup.
+     Recurring moves in how they reason — e.g. inversion, scale-hopping, analogy,
      first-principles, taste-as-filter. Cite where you saw each. -->
 
 ## Strengths & friction points
@@ -41,8 +41,8 @@
 
 ## How an agent should work with them
 
-`__FILL_FROM_USER__:working_preferences`
-<!-- Practical: response style, when to challenge vs validate, when to act vs ask.
+<!-- __FILL_FROM_USER__:working_preferences — FILL as preferences emerge from real sessions; not set at setup (seed quick ones in MEMORY.md instead).
+     Practical: response style, when to challenge vs validate, when to act vs ask.
      Cross-reference any preferences captured in memory / CLAUDE.md. -->
 
 ---

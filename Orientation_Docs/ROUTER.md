@@ -13,7 +13,9 @@
 - This `ROUTER.md` — decision guide
 - `INTELLECTUAL_LANDSCAPE_LITE.md` — distilled "who the owner is in ~200 lines" — ensures
   no agent ever operates on their data without knowing who they are
-- Global `MEMORY.md` — cross-session user memory
+- `MEMORY.md` — your portable cross-session memory, `@`-imported by `CLAUDE.md` (copy from
+  `MEMORY.example.md` on first run). Travels with the repo; distinct from Claude Code's
+  machine-local native `~/.claude/.../memory/` store.
 
 For anything beyond pure coding you may need a deeper tier below. **Bias toward
 loading more, not less** — see Behavioural notes at the bottom.

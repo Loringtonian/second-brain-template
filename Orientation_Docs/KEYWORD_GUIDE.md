@@ -24,8 +24,8 @@
 
 ## Vocabulary (grouped by theme)
 
-`__FILL_FROM_USER__:keywords`
-<!-- Group the owner's terms-of-art by theme. Each entry: the exact keyword + a short
+<!-- __FILL_FROM_USER__:keywords — FILL after your first brain-dump; mined from real notes, not set at setup.
+     Group the owner's terms-of-art by theme. Each entry: the exact keyword + a short
      gloss + (optionally) which project/folder it routes to. Mine their existing notes
      for the distinctive, recurring, coined terms — those are the high-value ones. -->
 
@@ -35,8 +35,8 @@
 
 ## Coined terms / terms-of-art
 
-`__FILL_FROM_USER__:coined_terms`
-<!-- The owner's invented or idiosyncratic vocabulary — the words that mean something
+<!-- __FILL_FROM_USER__:coined_terms — FILL as you notice your own idiosyncratic vocabulary in real content; not set at setup.
+     The owner's invented or idiosyncratic vocabulary — the words that mean something
      specific to THEM. These are the most important to preserve verbatim. -->
 
 ---
