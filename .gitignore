@@ -1,0 +1,43 @@
+# ── Personal-data firewall ───────────────────────────────────────────────
+# This repo ships as a TEMPLATE. As you fill it with your own life, keep the
+# private parts out of git until YOU choose otherwise. Uncomment what applies.
+
+# Cross-session agent memory (frequently holds personal facts)
+MEMORY.md
+memory/
+
+# Generated full-brain snapshot (large, personal — built by /load-brain)
+.claude/brain_snapshot.md
+
+# Centralized personal values, if you add a profile layer
+/profile/
+
+# Secrets / environment
+.env
+*.env
+**/credentials*
+**/*secret*
+
+# Machine-specific settings overrides (local perms/paths)
+.claude/settings.local.json
+
+# OS / editor / build cruft
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.pytest_cache/
+
+# ── Privacy depth (see Orientation_Docs/PRIVACY_DEPTH.md) ─────────────────
+# Keep the local depth manifest and your most-private (depth 4–5) material out of git.
+DEPTH_INDEX.json
+*.depth_manifest.json
+
+# ── Your private content folders ─────────────────────────────────────────
+# These ship empty/synthetic. Once you put REAL private content in them and you
+# do NOT want it public, uncomment the ones that apply BEFORE committing:
+# /Journal_Personal/
+# /Health/
+# /Personal_Operations/

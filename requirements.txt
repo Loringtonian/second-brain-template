@@ -1,0 +1,16 @@
+# Second Brain Template — Python dependencies
+# Installed automatically by the /setup environment bootstrap:
+#     python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
+# See SETUP.md for which skill/script needs which package.
+
+# --- Core: make the out-of-the-box image skills run ---
+# /remove-watermark (scripts/remove_watermark.py) + /nano-banana-flash, /nano-banana-pro
+opencv-python        # cv2 — watermark inpainting
+Pillow               # PIL — image read/write
+numpy                # array ops for inpainting
+google-genai         # Gemini image generation (nano-banana); `from google import genai`
+python-dotenv        # load GEMINI_API_KEY and friends from .env
+
+# --- Optional extras (heavier — pull in torch). Uncomment to enable. ---
+# simple-lama-inpainting   # /remove-watermark --lama (clean high-contrast-edge cases)
+# sentence-transformers    # /semantic-search, /verify-idea — wire up scripts/sb_embed.py (currently a stub)
