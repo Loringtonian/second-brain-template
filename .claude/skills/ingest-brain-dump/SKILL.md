@@ -13,7 +13,8 @@ description: >-
   NOT for podcast snips (use a snip-processing skill if configured).
   NOT for bookmark exports (use a bookmarks-ingest skill if configured).
   For a LARGE existing source export (notes-app dump, chat history, voice-note archive),
-  use /mine — it calibrates the agent's judgment on small batches before the bulk pass.
+  use /mine — it triages the source, then calibrates the agent's judgment on small batches
+  before the bulk pass.
   Preserves the owner's exact language — no paraphrasing.
 required_context_files:
   - Orientation_Docs/INTELLECTUAL_LANDSCAPE.md

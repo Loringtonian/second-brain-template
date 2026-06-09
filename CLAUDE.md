@@ -210,7 +210,7 @@ This Second Brain Template ships the **architecture-generic** skills below; only
 |------------------------------------------|-------------------------|
 | "brain dump", "process this", "ingest this" | `/ingest-brain-dump` |
 | "make files from this"                   | `/process-content`      |
-| "mine my [source]", "calibrate the mining", "idea mining" | `/mine` (calibrate judgment on batches of 10, then bulk-mine a large export) |
+| "mine my [source]", "calibrate the mining", "idea mining" | `/mine` (triage a large export, calibrate judgment on small batches, then bulk-mine) |
 
 **Search & exploration**
 
