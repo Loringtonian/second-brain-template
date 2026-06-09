@@ -34,7 +34,24 @@ finish in one sitting — say so, and this skill can resume.
 2. Tell the user, briefly: the brain ships blank by design; you'll interview them; ~20 min gets a
    working core (purpose + who-they-are), the rest accretes. Then begin Phase 1.
 
-## The interview (in order — purpose first)
+## Setup levels (run Core now; go deeper later)
+
+Setup is staged so the owner gets a working brain fast and deepens when they want. Read the invocation arg:
+
+- **`/setup` → Core (~5–10 min):** Phases 0 (env bootstrap), 1 (purpose), 2 (gaps), 3 (who you are),
+  7 (privacy depth — at least the register test), then Finishing. This alone is a usable, personalized brain.
+- **`/setup voice` → Voice & sources:** Phases 4 (voice guide), 5 (tools/APIs/passive capture),
+  6 (machine + preferred mobile interaction), 8 (folders & ingestion scope → hand off to `/mine`).
+- **`/setup deep` → Deep personalization:** Phase 9 (make the spec yours), fleshing out
+  `INTELLECTUAL_LANDSCAPE.md` + `COGNITIVE_PROFILE.md`, the full privacy-depth calibration, and
+  familiarizing the owner with the judgment-tuning skills — **`/golden-evolver`** (better few-shot
+  examples) and **`/harness-review`** (weekly self-improvement of the agent's behavior).
+- **`/setup` with no arg, after Core is done,** resumes the next undone level.
+
+Run only the phases for the requested level. Always tell the owner which level they just finished and what
+the next one covers, so deepening is an obvious next step rather than a thing they forget exists.
+
+## The interview (phases — grouped by level above)
 
 ### Phase 0 — Environment bootstrap (make the brain runnable)
 Before interviewing, get the tooling working so the brain can run its own scripts (use Bash):

@@ -461,6 +461,13 @@ After the user responds, persist changes to `maintenance-calibration.md`:
 4. Stage ONLY repo files that were edited in this run (never `git add -A`, never the calibration memory file)
 5. Commit: `"Weekly maintenance sync - [date]"`
 
+### Step 7 (optional) — offer a harness self-review
+This sweep kept the *content* clean. The agent's *behavior* is a separate axis. After the report, ask
+(AskUserQuestion) whether the owner also wants to run **`/harness-review`** — it reads the last week of
+session traces for harness-level friction (repeated corrections, permission-prompt churn, misfiring or
+unused skills, ignored rules) and proposes gated fixes. Default to offering it but not auto-running; if
+they decline, note it and finish.
+
 Present final report:
 
 ```markdown

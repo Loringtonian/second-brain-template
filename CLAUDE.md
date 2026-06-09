@@ -252,6 +252,7 @@ This Second Brain Template ships the **architecture-generic** skills below; only
 |------------------------------------------|-------------------------|
 | "lint this sub-agent prompt"             | `/delegate-check`       |
 | "evolve the examples", "golden evolver"  | `/golden-evolver`       |
+| "harness review", "self-review", "what's the agent getting wrong" | `/harness-review` |
 
 **Dev, media & disk**
 
