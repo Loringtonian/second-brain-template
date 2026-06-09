@@ -137,7 +137,13 @@ capture. Ask (AskUserQuestion, batch 2–4):
   → `disk-cleanup` `large-archival-folder`.
 - **Timezone** — their IANA timezone (e.g. `America/Toronto`). Write it to `.env` as
   `SECOND_BRAIN_TZ` (used by `scripts/tz.py`) and to `Orientation_Docs/ORIENTATION.md` `timezone`.
-- **Phone** — iOS or Android (it shapes your capture / inbox tooling and which apps you sync from).
+- **Phone — and how you want to reach the brain from it.** iOS or Android, *and* (AskUserQuestion) the
+  owner's **preferred way to interact with their second brain from their mobile device** — e.g. voice
+  dictation into a notes app that syncs, a phone-inbox folder the agent ingests, a chat bridge
+  (Telegram/WhatsApp/Signal/Discord) into the brain, or "desktop only, no mobile." The mobile surface is
+  where most real capture happens, so name it now; record the answer at `__FILL_FROM_USER__:mobile_interaction`
+  and, if it implies an inbox, wire it to the capture-surface routing in `CLAUDE.md` BOUNDARIES. Don't
+  build the bridge here — just capture the preference so the brain knows the owner's primary mobile path.
 - **Other tooling** — GPUs, key CLIs, local model stores — anything the agent should be
   resource-aware of.
 
@@ -203,6 +209,10 @@ they want a clean break, offer to replace the shipped spec with one authored fro
   ones are **content-first breadcrumbs** (project rosters, keyword mines), not things they forgot.
 - Tell them the routing already works now, and that they can deepen `INTELLECTUAL_LANDSCAPE.md`,
   `VOICE_GUIDE.md`, and the depth calibration any time by re-running `/setup`.
+- **Point them at `/golden-evolver`** — the way to tune the agent's *judgment* over time. Explain it in a
+  line: when the agent keeps mis-classifying, under-summarizing, or missing keywords on a kind of content,
+  they run `/golden-evolver [task]` to hand-pick a few great examples; every later run gets better. It's
+  the same "calibrate the AI's judgment" idea as the privacy and mining loops, applied to few-shot examples.
 - Hand off by ingestion scope (from the `source_inventory` you just recorded): if any source is
   **`pending`** (a real export ready to import), hand off to `/mine` — it triages, then calibrates on
   small batches, then bulk-mines (see `Orientation_Docs/MINING.md`). If everything is **`future`**

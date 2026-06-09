@@ -78,7 +78,7 @@ This protocol does NOT apply to markdown/Second Brain work -- only registered br
 
 ## SUB-AGENT DELEGATION
 
-When you dispatch a sub-agent (Task/Agent tool), the prompt you write IS the bottleneck on quality. Use the 10-slot skeleton below. Positive framing only — telling the model "don't do X" primes X. Keep a delegation prior-art doc with your own primary-source citations (`__FILL_FROM_USER__:delegation_rationale_doc`).
+When you dispatch a sub-agent (Task/Agent tool), the prompt you write IS the bottleneck on quality. Use the 10-slot skeleton below. Positive framing only — telling the model "don't do X" primes X. Full rationale + primary-source citations: `Orientation_Docs/SUBAGENT_DELEGATION_PRIOR_ART.md` (add your own there: `__FILL_FROM_USER__:delegation_rationale_doc`).
 
 ```
  1. <purpose>     PURPOSE & CONTEXT      — why this matters, what feeds downstream.
@@ -251,6 +251,7 @@ This Second Brain Template ships the **architecture-generic** skills below; only
 | User says... | Skill |
 |------------------------------------------|-------------------------|
 | "lint this sub-agent prompt"             | `/delegate-check`       |
+| "evolve the examples", "golden evolver"  | `/golden-evolver`       |
 
 **Dev, media & disk**
 
