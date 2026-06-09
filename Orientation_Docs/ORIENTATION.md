@@ -62,6 +62,10 @@ Content where AI synthesizes, develops, or articulates the owner's existing idea
 
 ## MINING WORKFLOW
 
+> **Large source export?** Calibrate first. Run the `/mine` calibration loop — batches of 10 → the
+> owner corrects → write each fix back into the rules → repeat until a batch is clean → then bulk-process.
+> Full procedure: `Orientation_Docs/MINING.md`. The steps below are the per-item mechanics that loop uses.
+
 1. **Confirm INTELLECTUAL_LANDSCAPE context** - INTELLECTUAL_LANDSCAPE_LITE.md is auto-loaded (Tier 0); the full INTELLECTUAL_LANDSCAPE.md loads via ROUTER.md Tier 2 for deep work. If you're mining, you're in Tier 2 — the full file should already be in your context.
 2. **Read CONTENT_TAXONOMY.md** - Understand source hierarchy and idea categories
 3. **Check SECOND_BRAIN_MASTER_INDEX.md** - Understand folder structure

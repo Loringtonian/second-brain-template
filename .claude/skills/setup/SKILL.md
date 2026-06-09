@@ -167,6 +167,10 @@ Also ask, batched:
   transcripts? → `Orientation_Docs/ORIENTATION.md` `original_thinking_sources`.
 - **External_Sources subfolders** they'll actually use (podcast clips, bookmarks, research) →
   `connection-finder` `external_source_subfolders`.
+- **A large existing export to seed from?** (a notes-app dump, chat history, a voice-note archive,
+  bookmarks). If so, point them at `/mine` — it **calibrates the agent's judgment on batches of 10
+  before the bulk pass**, so thousands of items don't get mis-filed on the agent's cold first guess.
+  This is principle "calibrate the AI judgement early" made runnable; full loop in `Orientation_Docs/MINING.md`.
 
 ### Phase 9 — Make the spec yours
 `INTENT_SPEC.md` has two halves: a fixed **architecture intent** (what this kind of brain is and why)
@@ -192,7 +196,8 @@ they want a clean break, offer to replace the shipped spec with one authored fro
   ones are **content-first breadcrumbs** (project rosters, keyword mines), not things they forgot.
 - Tell them the routing already works now, and that they can deepen `INTELLECTUAL_LANDSCAPE.md`,
   `VOICE_GUIDE.md`, and the depth calibration any time by re-running `/setup`.
-- Hand off to `/ingest-brain-dump` for their first real content.
+- Hand off to `/ingest-brain-dump` for their first real content — or, if they have a **large existing
+  export** to seed from, to `/mine` (calibrate judgment on batches of 10, then bulk-mine; see `Orientation_Docs/MINING.md`).
 
 ## Verification (before you call setup "done for now")
 Confirm: you used AskUserQuestion (not prose) for every phase you ran; Phase 1 (purpose) and Phase 2
