@@ -2,13 +2,15 @@
 
 **A working blueprint for a personal "second brain" that an AI coding agent can navigate — a blank template you clone and fill with your own life.**
 
+> **New here, or not very technical?** Start with **[START_HERE.md](START_HERE.md)** — a plain-English, no-jargon setup guide (the easiest path is the **Claude Desktop app**, no terminal needed). Stuck on a word like *clone* or *virtual environment*? See the **[GLOSSARY](GLOSSARY.md)**. Want to help this grow into a community project? See **[CONTRIBUTING.md](CONTRIBUTING.md)**.
+
 This repo is not a notes app and not a finished product. It's a battle-tested *architecture* for a Claude Code "second brain," reduced to its skeleton: the rules, the context-routing logic, the document templates, the skills, and the hooks — everything that teaches a fresh agent how to operate inside a personal knowledge base, with none of the content filled in yet.
 
 Every place your own content goes is marked `__FILL_FROM_USER__`. The whole thing is designed to be cloned and filled in *with the help of an agent* — the docs themselves carry instructions addressed to the AI that will onboard you.
 
 ---
 
-> **What to expect on first run:** the repo ships *blank* — every personal slot is a `__FILL_FROM_USER__` marker, and the auto-loaded identity doc (`Orientation_Docs/INTELLECTUAL_LANDSCAPE_LITE.md`) is an empty scaffold *by design*. That's normal, not broken. Open the repo in Claude Code and say *"set up my second brain"* — the **`/setup`** skill interviews you (purpose, gaps, who you are, voice, tools, privacy levels) and fills the markers. ~20 minutes gets you a working core; the rest accretes over time. A few skills call a helper you install — see [`SETUP.md`](SETUP.md).
+> **What to expect on first run:** the repo ships *blank* — every personal slot is a `__FILL_FROM_USER__` marker, and the auto-loaded identity doc (`Orientation_Docs/INTELLECTUAL_LANDSCAPE_LITE.md`) is an empty scaffold *by design*. That's normal, not broken. New here? **[START_HERE.md](START_HERE.md)** lays out the friendliest path (the **Claude Desktop app** — no terminal). Open the repo in Claude Code and say *"set up my second brain"* — the **`/setup`** skill interviews you (purpose, gaps, who you are, voice, tools, privacy levels) and fills the markers. ~20 minutes gets you a working core; the rest accretes over time. A few skills call a helper you install — see [`SETUP.md`](SETUP.md).
 
 ---
 
@@ -41,27 +43,29 @@ The net effect: the agent shows up to every request already knowing the rules, a
 
 ## Make this yours
 
-The repo ships as a blank template. To adopt it:
+The repo ships as a blank template — here's the easy way and the by-hand way.
 
-1. **Find every fill-in site:**
+1. **Easiest — let `/setup` interview you.** Open the repo in Claude Code (the **Claude Desktop app** is the friendliest — see **[START_HERE.md](START_HERE.md)**) and say *"set up my second brain."* The **`/setup`** skill walks you through who you are, what the brain is for, your voice, tools, and privacy levels, and fills the markers for you. ~20 minutes gets a working core.
+2. **By hand — find every fill-in site:**
    ```bash
    grep -rn "__FILL_FROM_USER__" .
    ```
-   Each hit is a place your own content goes. They come in three grades:
-   - bare `__FILL_FROM_USER__` (a single value to drop in),
-   - labeled `__FILL_FROM_USER__:worldview` (a named field),
-   - and HTML-comment **guidance blocks** that tell the onboarding agent what the section is for and what to ask you.
-2. **Let an agent interview you.** Open the repo in Claude Code and say: *"Help me personalize this Second Brain Template — walk me through the `__FILL_FROM_USER__` markers."* The generalized docs are written *to the agent*, with interview prompts inline, so it can guide you section by section.
-3. **Start with the load-bearing docs:** `CLAUDE.md` (owner one-liner, active reminders), `Orientation_Docs/INTELLECTUAL_LANDSCAPE_LITE.md` (who you are), then the rest as you go.
-4. **Add your own content and skills.** The skills are a starting kit (29 core + 2 exemplar patterns); add domain skills as you build them. A few skills call a helper you install — see [`SETUP.md`](SETUP.md). The `examples/` folder shows each template in action with a fictional persona — replace or delete it.
+   Each hit is a place your own content goes, in three grades: bare `__FILL_FROM_USER__` (one value), labeled `__FILL_FROM_USER__:worldview` (a named field), and HTML-comment **guidance blocks** that tell the onboarding agent what to ask you. Start with the load-bearing docs — `CLAUDE.md` (owner one-liner) and `Orientation_Docs/INTELLECTUAL_LANDSCAPE_LITE.md` (who you are).
+3. **Add your own content and skills.** The skills are a starting kit (30 core + 1 exemplar pattern, `media-pipeline-example`); add domain skills as you build them — and consider **[contributing](CONTRIBUTING.md)** them back. A few skills call a helper you install — see [`SETUP.md`](SETUP.md). The `examples/` folder shows each template with a fictional persona — replace or delete it.
 
-You do **not** have to fill everything before it's useful. Fill the owner one-liner and the landscape-lite, and the routing already works.
+**Using Codex or another agent?** This template is Claude-native; see **[AGENTS.md](AGENTS.md)** for how a non-Claude agent runs the setup (expect a rebuild for deep features).
+
+You do **not** have to fill everything before it's useful. Most of the ~140 markers are **breadcrumbs that fill in as you add content, not homework** — fill the owner one-liner and the landscape-lite and the routing already works.
 
 ---
 
 ## What's in here
 
 ```
+START_HERE.md              # new here? friendly, no-jargon setup guide — read this first
+GLOSSARY.md                # plain-English definition of every technical term in this repo
+CONTRIBUTING.md            # how to contribute skills/docs back (written for humans + agents)
+AGENTS.md                  # entry point for non-Claude agents (Codex, etc.)
 CLAUDE.md                  # entry point: hard rules, delegation skeleton, skills table, doc hierarchy
 FOLDER_ORIENTATION.md      # quick "which folder for what" routing table
 PERSONALIZE.md             # fill-in worksheet — every __FILL_FROM_USER__ site

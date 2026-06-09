@@ -32,7 +32,9 @@ finish in one sitting — say so, and this skill can resume.
 
 1. `grep -rn "__FILL_FROM_USER__" .` to see every fill-in site, and skim `PERSONALIZE.md` (the worksheet).
 2. Tell the user, briefly: the brain ships blank by design; you'll interview them; ~20 min gets a
-   working core (purpose + who-they-are), the rest accretes. Then begin Phase 1.
+   working core (purpose + who-they-are), the rest accretes. **Reassure them they need no technical
+   knowledge — you handle the setup steps (installing helpers, creating files); they just answer
+   questions.** Then begin Phase 1.
 
 ## Setup levels (run Core now; go deeper later)
 
@@ -64,7 +66,10 @@ Before interviewing, get the tooling working so the brain can run its own script
   (both gitignored). `.env` holds the keys you'll wire in Phase 5; `MEMORY.md` is the owner's
   portable cross-session memory (`@`-imported by `CLAUDE.md`) — you'll seed it at the end.
 - Do this automatically; only surface a manual step if something genuinely can't be set up for them
-  (no system Python, a wheel that won't build). Then continue to the interview.
+  (no system Python, a wheel that won't build). **If you can't run shell commands at all (e.g. a
+  sandboxed web surface with no terminal), don't block — tell the user the helper scripts can be
+  wired up later (see `SETUP.md`) and continue straight to the interview, which needs no Python.**
+  Then continue to the interview.
 
 ### Phase 1 — Purpose: what is this FOR?
 The most important question, and the one most setups skip. Ask (AskUserQuestion):

@@ -7,6 +7,12 @@ open this repo in Claude Code. **Easiest path: say "set up my second brain"** to
 privacy levels). Fill in your brain first; wire the helpers below up later, when you want the
 matching skill.
 
+> **Never used a terminal, or unsure what a "virtual environment" or "API key" is?** You can
+> ignore almost all of this file. If you set up via the **Claude Desktop app** (see
+> [`START_HERE.md`](START_HERE.md)), the `/setup` skill does every technical step for you. This
+> page is for wiring up an optional extra by hand later. Plain-English definitions of every term
+> here live in the **[GLOSSARY](GLOSSARY.md)**.
+
 A few skills are **patterns to adapt** rather than drop-in code: they call a helper script or
 external tool that is specific to one person's machine and is not bundled. Here's what each needs.
 
@@ -29,7 +35,9 @@ search, so they still work — just less semantically.
 
 The bundled scripts (`scripts/remove_watermark.py` + the `/nano-banana` image skills) need a few
 Python packages, pinned in [`requirements.txt`](requirements.txt). The **`/setup`** environment
-bootstrap creates a virtualenv and installs them for you automatically; to do it by hand:
+bootstrap creates a **virtual environment** (a private sandbox for this project's Python add-ons —
+see the [GLOSSARY](GLOSSARY.md#virtual-environment-venv)) and installs them for you automatically;
+to do it by hand:
 
 ```bash
 python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt

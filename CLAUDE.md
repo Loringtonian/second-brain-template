@@ -19,6 +19,12 @@
 @Orientation_Docs/INTELLECTUAL_LANDSCAPE_LITE.md
 @MEMORY.md
 
+> **Agent note — web portals:** If you are running in a web/cloud sandbox (claude.ai on the web,
+> ChatGPT/Codex web), tell the user up front that this template is built for a **local** agent
+> (the Claude Desktop app or the Claude Code CLI). A web sandbox can't reliably run its skills,
+> hooks, or Python helpers, so `/setup` may not fire and onboarding can silently underdeliver —
+> recommend switching to a local setup before continuing. See `START_HERE.md`.
+
 ---
 
 ## HARD RULES
