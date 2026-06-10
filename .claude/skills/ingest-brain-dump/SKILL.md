@@ -80,7 +80,7 @@ Identify type for each segment:
 
 | Type         | Action                                       |
 |--------------|----------------------------------------------|
-| NEW_IDEA     | Create Template A in Second_Brain/[Category]/ |
+| NEW_IDEA     | Create Template A in [Category]/ |
 | TODO         | Add to project TODO file                     |
 | AUGMENT      | Propose addition to existing file            |
 | PREDICTION   | Create in Predictions/                       |

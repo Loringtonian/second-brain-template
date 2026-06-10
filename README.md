@@ -2,6 +2,8 @@
 
 **A working blueprint for a personal "second brain" that an AI coding agent can navigate — a blank template you clone and fill with your own life.**
 
+> **Start with the why → [INTENT_SPEC.md](INTENT_SPEC.md).** It's the spec everything else in this repo serves: what this kind of brain is *for* (the fixed architecture intent), plus the Owner Intent slots that make it *yours* — your purpose, gaps, goals, and success criteria, filled by `/setup` and re-scored monthly. Read it before anything else; the rest of the repo is machinery in its service.
+
 > **New here, or not very technical?** Start with **[START_HERE.md](START_HERE.md)** — a plain-English, no-jargon setup guide (the easiest path is the **Claude Desktop app**, no terminal needed). Stuck on a word like *clone* or *virtual environment*? See the **[GLOSSARY](GLOSSARY.md)**. Want to help this grow into a community project? See **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 
 This repo is not a notes app and not a finished product. It's a battle-tested *architecture* for a Claude Code "second brain," reduced to its skeleton: the rules, the context-routing logic, the document templates, the skills, and the hooks — everything that teaches a fresh agent how to operate inside a personal knowledge base, with none of the content filled in yet.
@@ -23,7 +25,7 @@ The pieces that make it work:
 - **Tiered, silent context loading.** `CLAUDE.md` auto-loads on every session and imports one decision guide, `ROUTER.md`. The router then decides — silently, per request — which deeper docs to pull in. A pure coding question loads nothing extra; a "what should I work on?" loads the status tier; a "what do I actually think about X?" loads the full intellectual-context tier. (See [`Orientation_Docs/ROUTER.md`](Orientation_Docs/ROUTER.md).)
 - **A three-template document system.** Every piece of content is one of: **A** (the owner's original thinking, preserved verbatim), **B** (someone else's content, always attributed), or **C** (AI-synthesized publishable prose *from* the owner's notes). The author and the trust level are encoded in the template type. (See [`Orientation_Docs/ORIENTATION.md`](Orientation_Docs/ORIENTATION.md); live demos in [`examples/`](examples/).)
 - **Skills as the verbs.** Repeatable operations (ingest a brain dump, verify a duplicate, segment a transcript, run weekly maintenance) are packaged as skills in `.claude/skills/`. Each declares the context it needs and loads it on demand.
-- **Hooks as the reflexes.** Deterministic behaviors that can't depend on the model remembering — template validation, session checkpointing, reminder injection — live as hooks in `.claude/hooks/`.
+- **[Hooks](GLOSSARY.md#hook) as the reflexes.** Deterministic behaviors that can't depend on the model remembering — template validation, session checkpointing, reminder injection — live as hooks in `.claude/hooks/`.
 
 ---
 
@@ -62,6 +64,7 @@ You do **not** have to fill everything before it's useful. Most of the ~140 mark
 ## What's in here
 
 ```
+INTENT_SPEC.md             # THE WHY — two-layer intent spec: fixed architecture intent + your owner intent
 START_HERE.md              # new here? friendly, no-jargon setup guide — read this first
 GLOSSARY.md                # plain-English definition of every technical term in this repo
 CONTRIBUTING.md            # how to contribute skills/docs back (written for humans + agents)

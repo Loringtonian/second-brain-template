@@ -12,7 +12,7 @@ Present to user for approval:
 
 ### New Files (Approve Creation):
 
-1. [NEW_IDEA] Create: Second_Brain/[Category]/[Title].md
+1. [NEW_IDEA] Create: [Category]/[Title].md
    Keywords: [list]
    Projects: [list]
    → [Y/N]

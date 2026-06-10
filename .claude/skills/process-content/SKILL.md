@@ -68,7 +68,7 @@ Converts raw input → classified segments → Template A/B files.
 
 | Type | Destination |
 |------|-------------|
-| NEW_IDEA | Second_Brain/[Category]/ |
+| NEW_IDEA | [Category]/ |
 | TODO | Project TODO files |
 | PREDICTION | Predictions/ |
 | READING_LIST | AA_Lists/ |

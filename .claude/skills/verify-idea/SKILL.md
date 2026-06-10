@@ -74,10 +74,10 @@ When semantic search returns UNCERTAIN or you need exact matches:
 
 ```bash
 # Distinctive terms
-grep -ri "[term]" Second_Brain/ --include="*.md" -l
+grep -ri "[term]" . --include="*.md" -l
 
 # Project connections
-grep -r "**Projects:**.*[ProjectName]" Second_Brain/ --include="*.md"
+grep -r "**Projects:**.*[ProjectName]" . --include="*.md"
 
 # Category-specific
 grep -ri "[term]" Journal_Intellectual/ --include="*.md" -l

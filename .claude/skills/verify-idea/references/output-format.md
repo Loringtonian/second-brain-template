@@ -24,7 +24,7 @@
 ### Recommendation
 - DUPLICATE → Skip, already captured at [path]
 - OVERLAP → Consider merging with [path] or linking
-- NOT FOUND → Safe to create new file in Second_Brain/[category]/
+- NOT FOUND → Safe to create new file in [category]/
 - UNCERTAIN → Review these files: [list paths]
 ```
 

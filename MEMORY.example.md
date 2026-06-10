@@ -48,6 +48,9 @@ depth: 1
 - **Verify a fix before claiming it** — and make sure it generalizes; never tune to pass one example.
 - **Independent work runs in parallel by default.**
 - **For clearly-scoped, reversible actions, act and report** — don't hand over a menu for trivial calls.
+<!-- __FILL_FROM_USER__:memory_comms_style — your comms-style answers from /setup Phase 3.5 land here
+     (reply length/density, pushback vs execute, decisions in chat vs docs). Mirrored from
+     INTENT_SPEC.md `agent_comms_style`; this copy is the one that loads every session. -->
 <!-- __FILL_FROM_USER__:memory_ambient_rules — add your own every-reply preferences here. -->
 
 ## About me (pointers)

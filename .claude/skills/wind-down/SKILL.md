@@ -65,7 +65,7 @@ Parse the trigger:
 ### Step 2: Gather Session State
 
 Identify what was done this session:
-- Files created in Second_Brain/
+- Files created in the brain (repo root)
 - Files modified (including ORIENTATION.md files in any folder)
 - Orientation tracking docs updated
 - Tasks completed

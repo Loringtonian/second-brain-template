@@ -40,8 +40,10 @@ finish in one sitting — say so, and this skill can resume.
 
 Setup is staged so the owner gets a working brain fast and deepens when they want. Read the invocation arg:
 
-- **`/setup` → Core (~5–10 min):** Phases 0 (env bootstrap), 1 (purpose), 2 (gaps), 3 (who you are),
-  7 (privacy depth — at least the register test), then Finishing. This alone is a usable, personalized brain.
+- **`/setup` → Core (~10–20 min):** Phases 0 (env bootstrap), 1 (purpose), 2 (gaps), 3 (who you are),
+  3.5 (how the agent should talk to you), 7 (privacy depth — at least the register test), 10 (first
+  loop — one real capture, end to end), then Finishing. This alone is a usable, personalized brain
+  that has already run its core loop once.
 - **`/setup voice` → Voice & sources:** Phases 4 (voice guide), 5 (tools/APIs/passive capture),
   6 (machine + preferred mobile interaction), 8 (folders & ingestion scope → hand off to `/mine`).
 - **`/setup deep` → Deep personalization:** Phase 9 (make the spec yours), fleshing out
@@ -59,9 +61,11 @@ the next one covers, so deepening is an obvious next step rather than a thing th
 Before interviewing, get the tooling working so the brain can run its own scripts (use Bash):
 - **Verify Python and Git** — `python3 --version` and `git --version`. If either is missing, give the
   user the one-line install for their OS and pause until it's present.
-- **Create a virtualenv + install dependencies** — from the repo root:
-  `python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt`. This makes the
-  bundled scripts (`/remove-watermark`, the `/nano-banana` image skills) run out of the box.
+- **Create a virtualenv + install dependencies** — from the repo root. macOS/Linux:
+  `python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt`. Windows:
+  `py -m venv .venv; .venv\Scripts\pip install -r requirements.txt` (if `py` isn't found, use
+  `python`). This makes the bundled scripts (`/remove-watermark`, the `/nano-banana` image skills)
+  run out of the box.
 - **Create the owner's scratch files** — `cp .env.example .env` and `cp MEMORY.example.md MEMORY.md`
   (both gitignored). `.env` holds the keys you'll wire in Phase 5; `MEMORY.md` is the owner's
   portable cross-session memory (`@`-imported by `CLAUDE.md`) — you'll seed it at the end.
@@ -76,7 +80,8 @@ The most important question, and the one most setups skip. Ask (AskUserQuestion)
 - **"What do you want this second brain to DO for you?"** (e.g. never lose an idea / be a thinking
   partner / draft in your voice / track projects to the finish / remember your life / prep for
   agent-to-agent use). Multi-select + Other.
-- **"What would make it a clear win 3 months from now?"**
+- **"What would make it a clear win 1 month from now?"** (One month on purpose — near enough to feel,
+  and it gets re-scored at the monthly intent check-in you'll seed in Finishing.)
 Write the answer into `CLAUDE.md` (`__FILL_FROM_USER__:owner_one_liner` if it doubles as identity),
 the **"WHAT THIS BRAIN IS FOR"** section of `Orientation_Docs/INTELLECTUAL_LANDSCAPE_LITE.md`, and the
 **Owner Intent** section of `INTENT_SPEC.md` (`brain_purpose`, `owner_goals`, `success_criteria`).
@@ -101,6 +106,18 @@ shaped you most?") — and `COGNITIVE_PROFILE.md` `strengths_and_friction` (from
 Preserve their exact words — no paraphrasing. The deeper landscape fields that need *mined* content
 (obsessions-with-evidence, predictions, tensions, keyword mines) ship as breadcrumb comments — leave
 them; they get filled after real content lands, not at setup.
+
+### Phase 3.5 — How should I talk to you? (agent comms style — first-class, not a nicety)
+This preference shapes every single interaction, so it's elicited in Core, not buried in a follow-up.
+Ask (AskUserQuestion, one batched call):
+- **Reply style** — terse and dense (answer first, expand on request) vs. explain as you go?
+- **Pushback** — challenge my ideas when you disagree vs. just execute what I ask?
+- **Decisions** — present options and content in chat, in front of me, vs. write them to a doc I read later?
+- **Anything else about how an assistant should (or should not) talk to you?** (free text)
+Write the answers to `INTENT_SPEC.md` (`agent_comms_style`) **and** mirror them as one-liners into
+`MEMORY.md` (the Ambient section — it's `@`-imported at Tier 0, so they load every session). These two
+writes are the difference between a preference the owner stated once and a preference the agent
+actually obeys tomorrow.
 
 ### Phase 4 — Voice
 Ask them to paste **3–10 short pieces of their own writing** they feel "sound like me," and what to
@@ -214,18 +231,34 @@ prose once and invite them to **re-author any of it in their own words** — thi
 now, not the template's. Some owners keep it verbatim; some rewrite it wholesale. Both are right. (If
 they want a clean break, offer to replace the shipped spec with one authored from scratch in their voice.)
 
+### Phase 10 — First loop (run one real capture, end to end)
+Configuration is not the product; the loop is. Before Finishing, run the brain's core loop **once, live,
+with real content**, so the owner experiences capture → file → connection before the session ends:
+- Ask (AskUserQuestion): **"Give me one real thought — something on your mind today. Dictate or paste
+  1–3 paragraphs; rough is perfect."** Offer prompts if they blank: an idea they keep returning to, a
+  decision they're weighing, something they read that stuck.
+- Run it through **`/ingest-brain-dump`**: segment, classify, present the Template A file for approval
+  (their exact words, never paraphrased), file it, and point at any connection it makes — even on a
+  fresh brain, connect it to what Phases 1–3 captured about them ("this echoes the gap you named").
+- Close the phase explicitly: **"That was the loop. Now the real work begins — everything else in this
+  brain is that loop, deepened: you bring your actual content in, and the model of you compounds."**
+- If they genuinely have nothing in the moment, allow a skip — but seed the top item of `TODO_MASTER.md`
+  as "[ ] Run your first `/ingest-brain-dump` — the brain hasn't run its loop yet," so the very first
+  "what should I work on?" sends them back here.
+
 ## Finishing
 - **Initialize the status docs — no interview, just sensible fresh-brain defaults.** Write today's date
   and a "just started" state into the markers that load on "what should I work on," so the owner's first
   status query never surfaces a raw `__FILL_FROM_USER__`:
-  - `CLAUDE.md`: `current_status` → "Phase 1 (Ingestion): just started — finish `/setup`, then `/ingest-brain-dump`."; `active_reminders` → an empty checklist with a guidance comment.
+  - `CLAUDE.md`: `current_status` → "Phase 1 (Ingestion): just started — finish `/setup`, then `/ingest-brain-dump`."; `active_reminders` → seed ONE real item, the **monthly intent check-in**: `- [ ] **Intent check-in (due <today + 1 month>)** — re-read INTENT_SPEC.md Owner Intent, score the brain against your success criteria, revise what drifted, set the next due date. (Added: <today>; surface until done, then re-seed.)` This is what gives the success criteria a clock — without it the spec is write-only.
   - `STATE_OF_SECOND_BRAIN.md`: `current_phase` → "Phase 1 — Ingestion (fresh brain, no content filed yet)"; `last_updated` → today; `blockers` → "None yet"; `shipped` → "Nothing yet"; `maintenance_schedule` → their pick (default: weekly, Sundays).
-  - `TODO_MASTER.md` + `TODO_Second_Brain.md`: `last_updated` → today; top item → "[ ] Finish `/setup`, then run your first `/ingest-brain-dump`"; backlog empty.
+  - `TODO_MASTER.md` + `TODO_Second_Brain.md`: `last_updated` → today; top item → "[ ] Bring your first real content in (`/ingest-brain-dump` or `/mine`)" — or, if Phase 10 was skipped, "[ ] Run your first `/ingest-brain-dump` — the brain hasn't run its loop yet"; backlog empty.
   - `last_updated` in `KEYWORD_GUIDE.md`, `CONTENT_TAXONOMY.md`, `ORIENTATION.md`, `SECOND_BRAIN_MASTER_INDEX.md` → today.
   - `COGNITIVE_PROFILE.md` `model` → the model running this setup + today's date; `ROUTER.md` `subprojects_with_claude_md` and `special_role_docs` → empty lists (comment: "add as you create them").
 - **Seed `MEMORY.md`** from what you learned this interview: their inviolable rules → the Hard-rules
-  section; a couple of about-me pointers; their workflow preferences (terse? runs commands themselves?
-  ask before deploying?). One terse line each.
+  section; a couple of about-me pointers; their comms-style answers from Phase 3.5 (already mirrored
+  there — verify, don't re-ask) plus any other workflow preferences (runs commands themselves? ask
+  before deploying?). One terse line each.
 - Regenerate the worksheet so line numbers stay honest (re-scan `__FILL_FROM_USER__` across the tree
   and rewrite `PERSONALIZE.md`), then show the user what's still unfilled — and note that the remaining
   ones are **content-first breadcrumbs** (project rosters, keyword mines), not things they forgot.
@@ -243,9 +276,12 @@ they want a clean break, offer to replace the shipped spec with one authored fro
 
 ## Verification (before you call setup "done for now")
 Confirm: you used AskUserQuestion (not prose) for every phase you ran; Phase 1 (purpose) and Phase 2
-(gaps) were asked and written; the owner one-liner + landscape-lite have real content; any API keys
+(gaps) were asked and written; Phase 3.5 (comms style) was asked and landed in BOTH `INTENT_SPEC.md`
+and `MEMORY.md`; the owner one-liner + landscape-lite have real content; any API keys
 they gave went into `.env` (gitignored), not into a tracked file; **the status docs
 (`STATE_OF_SECOND_BRAIN`, `TODO_MASTER`, `CLAUDE.md` `current_status`) were initialized**, so a fresh
-"what should I work on?" shows no raw markers; **`MEMORY.md` exists** (copied from `MEMORY.example.md`)
-and carries at least their hard rules; and a final `grep -rn "__FILL_FROM_USER__" .` shows every
+"what should I work on?" shows no raw markers; **the monthly intent check-in reminder is seeded** in
+`CLAUDE.md` ACTIVE REMINDERS with a real due date; **`MEMORY.md` exists** (copied from
+`MEMORY.example.md`) and carries at least their hard rules; **Phase 10 ran one real ingestion loop**
+(or its skip seeded the first-ingest TODO); and a final `grep -rn "__FILL_FROM_USER__" .` shows every
 remaining marker is either filled or inside a breadcrumb comment — no naked Tier-0/Tier-1 placeholders.

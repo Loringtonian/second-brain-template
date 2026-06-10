@@ -12,7 +12,7 @@ Content type → destination mappings for brain dump ingestion.
 
 | Type        | Destination                             | Notes                                         |
 |-------------|-----------------------------------------|-----------------------------------------------|
-| NEW_IDEA    | `Second_Brain/[Category]/`              | Use Template A, verify with verify-idea first |
+| NEW_IDEA    | `[Category]/`              | Use Template A, verify with verify-idea first |
 | TODO        | Project TODO file                       | Format: `- [ ] [content] (Source: [date])`    |
 | AUGMENT     | Existing file                           | Propose addition, get approval                |
 | PREDICTION  | `Predictions/`                          | Include timeline, confidence                  |

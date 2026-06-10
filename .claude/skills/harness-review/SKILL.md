@@ -44,9 +44,15 @@ harness friction with evidence, not judgments. Brief each with the 10-slot skele
 - the **pattern** (e.g. "the owner re-corrected the agent's folder choice 3×", "permission prompt for
   the same command 5×", "a skill that should have fired didn't", "a memory rule that was ignored"),
 - the **evidence** (which session + a short quote/line ref),
-- the **intent it conflicts with** (a specific `CLAUDE.md` line / `MEMORY.md` rule / skill).
+- the **intent it conflicts with** (a specific `CLAUDE.md` line / `MEMORY.md` rule / skill / an
+  `INTENT_SPEC.md` Owner Intent item — purpose, gaps, success criteria, non-goals, comms style).
+  Hand each observer the Owner Intent section in its prompt so "what the owner wants" is checkable,
+  not guessed.
 
 ### 3 — Synthesize the proposal
+Before synthesizing, read `INTENT_SPEC.md` (the Owner Intent section) and check each candidate
+finding against it: a proposal that optimizes the agent's behavior *away* from the owner's stated
+purpose, comms style, or non-goals is itself harness friction — drop or invert it.
 Aggregate the observers' findings, dedup, and write one proposal:
 `Orientation_Docs/harness_review/PROPOSAL_<date>.md`. Each finding carries: pattern · evidence ·
 conflicting intent · a concrete proposed change (file + the edit). Order by how often the friction recurred.

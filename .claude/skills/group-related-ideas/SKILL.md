@@ -46,7 +46,7 @@ Before grouping ideas, ensure access to:
 When ideas form a coherent cluster that deserves its own namespace:
 
 ```
-1. Create new folder in Second_Brain/[Category]/[Topic]/
+1. Create new folder in [Category]/[Topic]/
 2. Move both files into folder
 3. Add folder-level README if warranted
 ```
@@ -115,7 +115,7 @@ When apparent relationship is superficial:
 **Shared Keywords:** [list]
 
 **Options:**
-- [F] Create folder: `Second_Brain/[Category]/[Proposed Name]/`
+- [F] Create folder: `[Category]/[Proposed Name]/`
 - [K] Add shared keywords: `[keyword1]`, `[keyword2]`
 - [M] Merge into: `[existing file path]`
 - [R] Reject (no meaningful connection)

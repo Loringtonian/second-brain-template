@@ -14,16 +14,24 @@
 > A personal knowledge management system — years of one person's intellectual output.
 > These files represent a lot of personal thinking. **Treat them with care.**
 > (Owner identity: `__FILL_FROM_USER__:owner_one_liner` — e.g. "who the owner is in one line.")
+>
+> **Why this brain exists — purpose, goals, success criteria — lives in [`INTENT_SPEC.md`](INTENT_SPEC.md)**
+> (repo root). It is the spec everything below serves: ROUTER Tier 1 loads it for any "what should I
+> work on" / priorities request, and `/weekly-maintenance` checks the brain's growth against it.
 
 @Orientation_Docs/ROUTER.md
 @Orientation_Docs/INTELLECTUAL_LANDSCAPE_LITE.md
 @MEMORY.md
+<!-- MEMORY.md is gitignored and created by /setup Phase 0 (cp MEMORY.example.md MEMORY.md).
+     Until then the import above resolves to nothing — that's expected, not broken. -->
 
 > **Agent note — web portals:** If you are running in a web/cloud sandbox (claude.ai on the web,
 > ChatGPT/Codex web), tell the user up front that this template is built for a **local** agent
-> (the Claude Desktop app or the Claude Code CLI). A web sandbox can't reliably run its skills,
-> hooks, or Python helpers, so `/setup` may not fire and onboarding can silently underdeliver —
-> recommend switching to a local setup before continuing. See `START_HERE.md`.
+> (the Claude Desktop app or the Claude Code CLI). Web sessions are GitHub-gated (the repo must
+> already live on the user's own GitHub, so the beginner Download-ZIP path doesn't apply), and
+> some of the template's local automation may behave differently in a cloud sandbox — recommend
+> a local setup for first-run onboarding, and verify each helper step actually ran rather than
+> assuming. See `START_HERE.md`.
 
 ---
 
@@ -271,7 +279,7 @@ This Second Brain Template ships the **architecture-generic** skills below; only
 | "clean up my disk", "free up space"      | `/disk-cleanup`         |
 | "remove watermark", "dewatermark"        | `/remove-watermark`     |
 
-> **Exemplar skill (included):** `media-pipeline-example` shows how a richer skill family is built. (The ingest + connection-finder examples were replaced by the full `/ingest-brain-dump` and `/connection-finder` skills.) A few skills call a helper you install — see `SETUP.md`.
+> **Exemplar skill (included):** `/media-pipeline-example` shows how a richer skill family is built. (The ingest + connection-finder examples were replaced by the full `/ingest-brain-dump` and `/connection-finder` skills.) A few skills call a helper you install — see `SETUP.md`.
 
 See individual SKILL.md files for full descriptions and trigger phrases.
 
@@ -313,7 +321,7 @@ Context loads in tiers. `Orientation_Docs/ROUTER.md` is the decision guide and i
 
 ### Tier 1 — Brain nav / status / what's-next (ROUTER Rule 2)
 Loaded when user asks "what's next", project status, folder routing, near-term direction:
-- ORIENTATION.md, SECOND_BRAIN_MASTER_INDEX.md, STATE_OF_SECOND_BRAIN.md, PHASE_2_VISION.md, TODO_MASTER.md
+- INTENT_SPEC.md (repo root — Owner Intent: stated purpose, gaps, success criteria), ORIENTATION.md, SECOND_BRAIN_MASTER_INDEX.md, STATE_OF_SECOND_BRAIN.md, PHASE_2_VISION.md, TODO_MASTER.md
 
 ### Tier 2 — Deep intellectual / strategic / personal-data analysis (ROUTER Rule 3)
 Loaded for thinkers, influences, ideas, priorities, cross-project synthesis, OR analytical tasks on the owner's own data that ask "what's most interesting/striking/best":

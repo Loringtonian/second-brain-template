@@ -97,7 +97,7 @@ grep -ri "governance" . --include="*.md" -l
 
 ## Index Management
 
-The index auto-updates when files are created/edited in Second_Brain/.
+The index auto-updates when files are created/edited in the brain (repo root).
 
 ```bash
 # Rebuild index manually (if needed)

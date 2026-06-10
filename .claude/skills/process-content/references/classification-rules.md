@@ -4,7 +4,7 @@
 
 | Type | Description | Destination |
 |------|-------------|-------------|
-| `NEW_IDEA` | Novel concept worth storing | Second_Brain/[Category]/ |
+| `NEW_IDEA` | Novel concept worth storing | [Category]/ |
 | `TODO` | Action item, task | Project TODO files |
 | `AUGMENT` | Addition to existing idea | Propose addition to existing file |
 | `PREDICTION` | Forecast with timeline | Predictions/ |

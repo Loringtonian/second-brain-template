@@ -3,24 +3,30 @@
 Deterministic Second Brain hygiene checks for /weekly-maintenance.
 
 Read-only. Prints categorized MECHANICAL findings (or --json) for the skill's
-triage step. Each check maps to a class of drift the LLM review agents proved
-unreliable at catching (self-audit 2026-05-31, run wf_251815d0-be0): they sample
-rather than enumerate, so structural parity / link resolution / count drift slip
-through. This script enumerates exhaustively; the agents keep the semantic/quality
-judgments a script can't make.
+triage step. Each check maps to a class of drift LLM review agents prove
+unreliable at catching: they sample rather than enumerate, so structural parity /
+link resolution / count drift slip through. This script enumerates exhaustively;
+the agents keep the semantic/quality judgments a script can't make.
 
 Exit code is always 0 — findings are data for triage, not a failure signal.
 """
 import os, re, sys, glob, json
 
-REPO = "$SECOND_BRAIN_ROOT"
-SB = REPO  # brain content lives at the repo root since the 2026-06-02 flatten
+# Repo root: $SECOND_BRAIN_ROOT if set, else resolved from this file's location
+# (.claude/skills/weekly-maintenance/checks.py → three levels up).
+REPO = os.environ.get("SECOND_BRAIN_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+SB = REPO  # brain content lives at the repo root
 ORI = os.path.join(SB, "Orientation_Docs")
 PROJ = os.path.join(SB, "Projects")
 SKILLS = os.path.join(REPO, ".claude", "skills")
 CLAUDE_MD = os.path.join(REPO, "CLAUDE.md")
-MEM_DIR = "$HOME/.claude/projects/<your-project-dir-slug>/memory"
-MEMORY_MD = os.path.join(MEM_DIR, "MEMORY.md")
+# Portable memory index — lives at the repo root (@-imported by CLAUDE.md; created
+# by /setup from MEMORY.example.md). The hygiene checks also sweep Claude Code's
+# machine-local native memory dir if one exists for this repo.
+MEMORY_MD = os.path.join(REPO, "MEMORY.md")
+MEM_DIR = os.path.expanduser(
+    "~/.claude/projects/" + re.sub(r"[/.]", "-", REPO) + "/memory")
 
 # Native Claude Code loader caps (HARD — over either → silent tail-drop):
 # the harness loads first 200 lines OR ~24.4 KiB, whichever hits first.
@@ -151,12 +157,13 @@ def check_doc_links():
 
 # ---------------------------------------------------------------------------
 def check_intent_inventory():
-    """Scan Projects/*/INTENT_SPEC.md vs INTENT_SPEC_INVENTORY.md claims."""
-    inv = os.path.join(ORI, "INTENT_SPEC_INVENTORY.md")
-    txt = read(inv)
-    if txt is None:
-        add("medium", "intent-spec", "INTENT_SPEC_INVENTORY.md not found")
-        return
+    """Root INTENT_SPEC.md presence + Projects/*/INTENT_SPEC.md vs optional inventory."""
+    # The root intent spec is load-bearing (ROUTER Tier 1 + the weekly drift check
+    # read it). Its absence is real drift, not a style nit.
+    if not os.path.isfile(os.path.join(REPO, "INTENT_SPEC.md")):
+        add("high", "intent-spec",
+            "root INTENT_SPEC.md missing — ROUTER Tier 1 and the weekly intent-drift "
+            "check both depend on it")
     on_disk = {}
     for top in sorted(glob.glob(os.path.join(PROJ, "*"))):
         p = os.path.join(top, "INTENT_SPEC.md")
@@ -165,34 +172,33 @@ def check_intent_inventory():
             on_disk[os.path.basename(top)] = (
                 "UNOFFICIAL" if "UNOFFICIAL" in head else "OFFICIAL?"
             )
+    # An inventory doc is an optional convention for brains with many projects.
+    # No inventory → nothing to cross-check; skip silently.
+    inv = os.path.join(ORI, "INTENT_SPEC_INVENTORY.md")
+    txt = read(inv)
+    if txt is None:
+        return
     # entries the inventory names with a `Projects/X/INTENT_SPEC.md` path whose
     # spec file is absent on disk. Scoped to the Projects/ prefix so the regex
     # does not false-positive on prose mentions of non-Projects paths
-    # (e.g. the meta-root `INTENT_SPEC.md`, which is tracked
-    # separately and is not a Projects/ subdir).
+    # (e.g. the root `INTENT_SPEC.md`, which is tracked separately).
     # dict.fromkeys dedups while preserving order — a project named in two
     # inventory rows should flag once, not once per mention.
     for proj in dict.fromkeys(re.findall(r"`Projects/([A-Za-z0-9_]+)/INTENT_SPEC\.md`", txt)):
         if proj not in on_disk:
             add("medium", "intent-spec",
                 f"inventory lists Projects/{proj}/INTENT_SPEC.md but no such file on disk")
-    # internal table-vs-detail consistency for bucket (d)
-    dm = re.search(r"\(d\).*?\|\s*(\d+)\s*\|", txt)
-    dlist = re.search(r"\(d\)\s+\*\*FULL UNOFFICIAL DRAFT\*\*.*?(?=\n\(e\)|\n---)", txt, re.S)
-    if dm and dlist:
-        listed = len(re.findall(r"^\d+\.\s", dlist.group(0), re.M))
-        if int(dm.group(1)) != listed:
-            add("medium", "intent-spec",
-                f"bucket (d) summary count={dm.group(1)} but detail list has {listed}")
-    # staleness of the "Last rewritten" date
-    if re.search(r"Last rewritten 2026-04", txt):
-        add("low", "intent-spec",
-            "INTENT_SPEC_INVENTORY 'Last rewritten' date is April — likely stale")
 
 
 # ---------------------------------------------------------------------------
 def check_memory_hygiene():
-    """Memory frontmatter names, wikilink resolution, index integrity, orphans."""
+    """Memory frontmatter names, wikilink resolution, index integrity, orphans.
+
+    Sweeps Claude Code's machine-local native memory dir for this repo. A fresh
+    or non-Claude setup has no such dir — skip silently, nothing to check.
+    """
+    if not os.path.isdir(MEM_DIR):
+        return
     files = [f for f in glob.glob(os.path.join(MEM_DIR, "*.md"))
              if os.path.basename(f) != "MEMORY.md"]
     name_slugs, file_slugs = set(), set()
@@ -226,8 +232,8 @@ def check_memory_hygiene():
                 else:
                     add("low", "memory",
                         f"{f}:{ln} forward-ref wikilink [[{wl}]] (no target yet — ok per design)")
-    # MEMORY.md index integrity + orphans
-    mem = read(MEMORY_MD) or ""
+    # native MEMORY.md index integrity + orphans
+    mem = read(os.path.join(MEM_DIR, "MEMORY.md")) or ""
     indexed = set()
     for tgt in re.findall(r"\]\(([A-Za-z0-9_./-]+\.md)\)", mem):
         slug = os.path.basename(tgt)[:-3]
@@ -249,9 +255,12 @@ def check_memory_hygiene():
 
 
 def check_memory_budget():
+    """Size discipline for the portable repo-root MEMORY.md (loaded every session)."""
     mem = read(MEMORY_MD)
     if mem is None:
-        add("medium", "memory-budget", "MEMORY.md not found")
+        add("medium", "memory-budget",
+            "MEMORY.md not found at repo root — run /setup "
+            "(it copies MEMORY.example.md → MEMORY.md)")
         return
     lines = mem.splitlines()
     nbytes = len(mem.encode("utf-8"))

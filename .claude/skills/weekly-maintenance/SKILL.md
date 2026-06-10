@@ -6,6 +6,7 @@ description: >-
   auto-applies mechanical fixes, surfaces only judgment calls.
   Use when user says "weekly maintenance", "maintenance", "weekly sync", or on Sundays.
 required_context_files:
+  - INTENT_SPEC.md
   - Orientation_Docs/STATE_OF_SECOND_BRAIN.md
   - Orientation_Docs/TODO_MASTER.md
   - Orientation_Docs/TRACKING_LOG.md
@@ -20,6 +21,7 @@ required_context_files:
 Before doing anything else, silently `Read` each file in `required_context_files` (listed in frontmatter) if it is not already in your context. Do NOT announce the reads. Do NOT ask permission. This ensures the skill has the orientation it needs without bloating sessions that don't invoke it.
 
 Files:
+- `INTENT_SPEC.md` (repo root — the Owner Intent section is the yardstick the drift check below measures against)
 - `Orientation_Docs/STATE_OF_SECOND_BRAIN.md`
 - `Orientation_Docs/TODO_MASTER.md`
 - `Orientation_Docs/TRACKING_LOG.md`
@@ -47,11 +49,11 @@ python3 "$SECOND_BRAIN_ROOT/scripts/update_counts.py"
 # 2. Last maintenance date
 grep "Last Maintenance:" "$SECOND_BRAIN_ROOT/Orientation_Docs/STATE_OF_SECOND_BRAIN.md"
 
-# 3. New files since last maintenance
-cd $SECOND_BRAIN_ROOT && git log --since="[LAST_MAINTENANCE_DATE]" --diff-filter=A --name-only --pretty=format:"" | grep "Second_Brain/" | sort -u
+# 3. New files since last maintenance (repo root IS the brain — no path filter needed)
+cd $SECOND_BRAIN_ROOT && git log --since="[LAST_MAINTENANCE_DATE]" --diff-filter=A --name-only --pretty=format:"" | grep -v '^$' | sort -u
 
 # 4. Modified files since last maintenance
-cd $SECOND_BRAIN_ROOT && git log --since="[LAST_MAINTENANCE_DATE]" --name-only --pretty=format:"" | grep "Second_Brain/" | sort -u
+cd $SECOND_BRAIN_ROOT && git log --since="[LAST_MAINTENANCE_DATE]" --name-only --pretty=format:"" | grep -v '^$' | sort -u
 
 # 5. Commit messages since last maintenance
 cd $SECOND_BRAIN_ROOT && git log --since="[LAST_MAINTENANCE_DATE]" --oneline
@@ -70,28 +72,7 @@ done | sort -rn
 
 **Carry-over read (mandatory):** also load `maintenance-calibration.md` (listed in `required_context_files`) and extract the `## Carry-Over Register` section. Each entry has a `first_flagged` date and `runs_surfaced` count — these feed the escalation ladder in Step 4. If the file does not exist, or exists but has no Carry-Over Register section, treat the register as empty and proceed; do not block on it.
 
-```bash
-# 7. Agentic Market catalog refresh
-curl -s "https://agentic.market/v1/services" | python3 -c "
-import json, sys
-try:
-    data = json.load(sys.stdin)
-    services = data if isinstance(data, list) else data.get('services', data.get('data', []))
-    print(f'Total services: {len(services)}')
-    # Extract categories
-    cats = {}
-    for s in services:
-        cat = s.get('category', 'other')
-        cats[cat] = cats.get(cat, 0) + 1
-    for c, n in sorted(cats.items(), key=lambda x: -x[1])[:10]:
-        print(f'  {c}: {n}')
-except: print('Agentic Market fetch failed — skip')
-" 2>/dev/null
-```
-
-If the service count changed materially (>10% or >50 new services), regenerate `Reference/Agentic_Market_Catalog.md` by fetching the full catalog and rebuilding the tables. Also update the count in `memory/reference_agentic_market.md` and the MEMORY.md one-liner. If count is stable (±10%), skip — no churn.
-
-Store all output as `gather_context` — passed to all 3 agents. Include `aged_drift`, `carry_over`, and `agentic_market_count` as named sub-sections so agents can reason about them separately from fresh activity.
+Store all output as `gather_context` — passed to all 3 agents. Include `aged_drift` and `carry_over` as named sub-sections so agents can reason about them separately from fresh activity.
 
 ### Step 1.5: DETERMINISTIC CHECKS (always runs, read-only)
 
@@ -113,7 +94,7 @@ Each agent receives `gather_context` plus its specific instructions below.
 
 #### Agent A: "Doc Coherence"
 
-Doc Coherence owns the full orientation surface — not just the STATE/MASTER_INDEX pair. It also bridges the Wiki (the active enrichment layer) back into the intellectual spine (`INTELLECTUAL_LANDSCAPE.md`), so new projects, people, and concepts don't stall unregistered.
+Doc Coherence owns the full orientation surface — not just the STATE/MASTER_INDEX pair. It also measures the week's accretion against the Owner Intent in `INTENT_SPEC.md` (the drift check that keeps growth pointed where the owner said it should point), and — if the brain maintains an optional `Wiki/` synthesis layer — bridges it back into the intellectual spine (`INTELLECTUAL_LANDSCAPE.md`), so new projects, people, and concepts don't stall unregistered.
 
 **Prompt template:**
 
@@ -123,7 +104,7 @@ You are Agent A in a three-agent weekly maintenance sweep (Doc Coherence, alongs
 </purpose>
 
 <role>
-Orientation-doc coherence auditor covering counts, dates, tiers, TODO routing, Wiki↔INTELLECTUAL_LANDSCAPE bridge, CLAUDE.md ACTIVE REMINDERS routing, dead references, quality remediation, and carry-over escalation.
+Orientation-doc coherence auditor covering counts, dates, tiers, TODO routing, intent drift (accretion vs INTENT_SPEC.md Owner Intent), CLAUDE.md ACTIVE REMINDERS routing, dead references, quality remediation, carry-over escalation, and (if present) the Wiki↔INTELLECTUAL_LANDSCAPE bridge.
 </role>
 
 <return>
@@ -163,15 +144,16 @@ Per item:
 </return>
 
 <approach>
-Load the context block below (file counts, git activity, aged drift, carry-over register, agentic market count) and the nine orientation-doc files. Then sweep the coherence surface across these areas; each area you examine lands in exactly one of the report's sections.
+Load the context block below (file counts, git activity, aged drift, carry-over register) and every file in the mandatory READ list. Then sweep the coherence surface across these areas; each area you examine lands in exactly one of the report's sections.
 
 - **Counts.** Compare documented file counts in MASTER_INDEX's stats table and CONTENT_TAXONOMY's "Current State" table to the actual numbers from update_counts.py. A drift of >5% is AUTO-APPLY with the corrected number; tighter drift is reported under NO ISSUES FOUND.
 - **Dates.** "Last Updated" / "As of" stamps within 14 days are fresh. 14–30 days old with clearly-stale content is AUTO-APPLY (update the stamp). Older than 30 days is a JUDGMENT CALL (may need a content refresh, not just a date bump).
 - **Project tiers.** Cross-reference STATE_OF_SECOND_BRAIN's tier tables against the git activity block. Tier alignment with observed activity is NO ISSUES FOUND; genuine mismatches (Tier 1 silent for weeks, Tier 4 shipping daily) are JUDGMENT CALLS.
-- **TODO routing.** Glob for `Second_Brain/**/TODO*.md`. Every result should be referenced in TODO_MASTER.md or be explicitly archived. Orphans are JUDGMENT CALLS unless the routing is unambiguous (in which case AUTO-APPLY the index-line insert).
-- **Wiki↔INTELLECTUAL_LANDSCAPE bridge.** Every Wiki page under `projects/`, `entities/people/`, or `concepts/` that also appears in STATE_OF_SECOND_BRAIN's tier tables should appear in INTELLECTUAL_LANDSCAPE's corresponding section. Missing entries are JUDGMENT CALLS (propose the table-row insert so the owner can one-click approve).
+- **TODO routing.** Glob for `**/TODO*.md` from the repo root. Every result should be referenced in TODO_MASTER.md or be explicitly archived. Orphans are JUDGMENT CALLS unless the routing is unambiguous (in which case AUTO-APPLY the index-line insert).
+- **Intent drift (vs INTENT_SPEC.md Owner Intent).** Read the Owner Intent section — purpose, gaps, goals, success criteria, non-goals. Compare it against the week's actual accretion (the git-activity block: where new files landed, what projects moved). Sustained mismatch is a JUDGMENT CALL with evidence — e.g. "stated purpose is X, but 3 weeks of files have landed in Y and nothing has touched X," or activity that matches a stated *non-goal*. Also check the seeded **intent check-in** reminder in CLAUDE.md ACTIVE REMINDERS: if its due date has passed, surface it as ACTION REQUIRED (it is the owner's monthly re-score of the spec). If Owner Intent still holds naked `__FILL_FROM_USER__` markers after setup, that's a JUDGMENT CALL to re-run `/setup`. Alignment is NO ISSUES FOUND ("accretion consistent with stated purpose").
+- **Wiki↔INTELLECTUAL_LANDSCAPE bridge** *(only if the brain maintains a `Wiki/` synthesis layer — skip with a NO ISSUES FOUND note if the folder doesn't exist)*. Every Wiki page under `projects/`, `entities/people/`, or `concepts/` that also appears in STATE_OF_SECOND_BRAIN's tier tables should appear in INTELLECTUAL_LANDSCAPE's corresponding section. Missing entries are JUDGMENT CALLS (propose the table-row insert so the owner can one-click approve).
 - **ACTIVE REMINDERS routing.** Each bullet under CLAUDE.md's ACTIVE REMINDERS heading should be grep-findable in some TODO file. Unrouted reminders are JUDGMENT CALLS (propose the destination file and section).
-- **Dead references.** Each orientation doc references other files by name. For each of the 9 mandatory-read docs, sample ≥3 referenced file paths, verify each target via Read or Glob, and report the sampled set in your output so the lead agent can audit which references you actually checked. Targets that exist are NO ISSUES FOUND. Unambiguous renames (exactly one match elsewhere) are AUTO-APPLY. Ambiguous cases are JUDGMENT CALLS.
+- **Dead references.** Each orientation doc references other files by name. For each doc in the mandatory READ list, sample ≥3 referenced file paths, verify each target via Read or Glob, and report the sampled set in your output so the lead agent can audit which references you actually checked. Targets that exist are NO ISSUES FOUND. Unambiguous renames (exactly one match elsewhere) are AUTO-APPLY. Ambiguous cases are JUDGMENT CALLS.
 - **Quality remediation.** STATE's known-quality-issues list is the check list. For each listed issue, git activity since last maintenance either resolved it or did not. Resolved items go under CARRY-OVER RESOLVED with the commit reference; open items stay under NO ISSUES FOUND unless this run uncovered new ones.
 - **Carry-over register.** The block below lists entries with `first_flagged` and `runs_surfaced`. Each entry lands in one of four places: ACTION REQUIRED (runs_surfaced ≥ 3), JUDGMENT CALLS (< 3, with the age stamped), CARRY-OVER RESOLVED (underlying issue fixed — verify, don't assume), or stays in JUDGMENT CALLS flagged as unchanged.
 </approach>
@@ -210,13 +192,13 @@ A well-formed ACTION REQUIRED item:
 - JUDGMENT CALLS must include a concrete `Suggested action` and `Why uncertain` — a JUDGMENT CALL with no recommendation wastes the owner's attention on the discovery rather than the decision.
 - For the carry-over register: verify resolution by checking the file state, not by inference. A carry-over is RESOLVED only when the underlying file / edit actually exists today.
 - Cite absolute paths (beginning with `$HOME/`) in every File reference so the lead agent and the owner can click directly.
-- NO ISSUES FOUND is a positive reporting section — an empty sweep should land checks here, not omit them. "Checks I ran and everything was fine" is useful signal; silence is not. Name each of the nine check areas explicitly so the lead agent can confirm every area was swept (e.g., "Counts drift — 0.9%, within threshold"; "Dead-reference sweep — sampled 15 refs across 9 docs, all resolve").
+- NO ISSUES FOUND is a positive reporting section — an empty sweep should land checks here, not omit them. "Checks I ran and everything was fine" is useful signal; silence is not. Name each of the ten check areas explicitly so the lead agent can confirm every area was swept (e.g., "Counts drift — 0.9%, within threshold"; "Intent drift — accretion consistent with stated purpose"; "Dead-reference sweep — sampled 15 refs, all resolve").
 - The five structured sections are the aggregator contract. Any prose outside those headings (introduction, summary, commentary) is optional padding — keep it short and after the NO ISSUES FOUND section so it does not interleave with the parsed content.
 </constraints>
 
 <verify>
 Before ending your turn, confirm:
-- Every of the nine areas in <approach> is accounted for somewhere in the report — AUTO-APPLY / JUDGMENT CALLS / CARRY-OVER RESOLVED / NO ISSUES FOUND.
+- Every one of the ten areas in <approach> is accounted for somewhere in the report — AUTO-APPLY / JUDGMENT CALLS / CARRY-OVER RESOLVED / NO ISSUES FOUND.
 - Every carry-over register entry lands in ACTION REQUIRED (if runs_surfaced ≥ 3), CARRY-OVER RESOLVED (if actually resolved), or JUDGMENT CALLS (otherwise) — no carry-over entry is missing from the report.
 - Every AUTO-APPLY item has all 5 fields (File, Line ref, Current, Proposed, Reason) filled with real content, not placeholders.
 - Every JUDGMENT CALL has all 5 fields (File, Issue, Carry-over?, Suggested action, Why uncertain) filled.
@@ -247,19 +229,16 @@ AGED WORKING-TREE DRIFT (files uncommitted 7+ days):
 CARRY-OVER REGISTER (flagged in prior runs, still unresolved):
 [paste entries from maintenance-calibration.md Carry-Over Register with runs_surfaced counts]
 
-AGENTIC MARKET COUNT (for drift detection):
-[paste from gather step]
-
 READ THESE FILES (mandatory):
-1. $SECOND_BRAIN_ROOT/Orientation_Docs/STATE_OF_SECOND_BRAIN.md
-2. $SECOND_BRAIN_ROOT/Orientation_Docs/SECOND_BRAIN_MASTER_INDEX.md
-3. $SECOND_BRAIN_ROOT/Orientation_Docs/TODO_MASTER.md
-4. $SECOND_BRAIN_ROOT/Orientation_Docs/CONTENT_TAXONOMY.md
-5. $SECOND_BRAIN_ROOT/Orientation_Docs/INTELLECTUAL_LANDSCAPE.md
-6. $SECOND_BRAIN_ROOT/Orientation_Docs/ORIENTATION.md
-7. $SECOND_BRAIN_ROOT/Wiki/index.md
-8. $SECOND_BRAIN_ROOT/Wiki/TRACKING.md
-9. $SECOND_BRAIN_ROOT/CLAUDE.md — ONLY the "ACTIVE REMINDERS" block (search for that heading)
+1. $SECOND_BRAIN_ROOT/INTENT_SPEC.md — the Owner Intent section (yardstick for the intent-drift check)
+2. $SECOND_BRAIN_ROOT/Orientation_Docs/STATE_OF_SECOND_BRAIN.md
+3. $SECOND_BRAIN_ROOT/Orientation_Docs/SECOND_BRAIN_MASTER_INDEX.md
+4. $SECOND_BRAIN_ROOT/Orientation_Docs/TODO_MASTER.md
+5. $SECOND_BRAIN_ROOT/Orientation_Docs/CONTENT_TAXONOMY.md
+6. $SECOND_BRAIN_ROOT/Orientation_Docs/INTELLECTUAL_LANDSCAPE.md
+7. $SECOND_BRAIN_ROOT/Orientation_Docs/ORIENTATION.md
+8. $SECOND_BRAIN_ROOT/CLAUDE.md — ONLY the "ACTIVE REMINDERS" block (search for that heading)
+9. $SECOND_BRAIN_ROOT/Wiki/index.md + Wiki/TRACKING.md — ONLY if a Wiki/ layer exists (optional pattern; skip otherwise)
 </context>
 ```
 
@@ -400,9 +379,9 @@ After all 3 agents return:
 5. Deduplicate (same file + same issue = one item)
 6. Prioritize: ACTION REQUIRED first, then judgment calls by impact
 
-### Step 3.5: REBUILD EMBEDDINGS INDEX (unconditional)
+### Step 3.5: REBUILD EMBEDDINGS INDEX (only if you've implemented the embedding stub)
 
-Run an incremental embeddings rebuild before applying edits, so semantic-search recall can never drift more than 7 days even if the `mark_embedding_pending.py` PostToolUse hook misses signals. Incremental, not `--rebuild`.
+`scripts/sb_embed.py` ships as a stub — see `SETUP.md`. If you haven't implemented it yet, skip this step with a one-line note in the report. Once implemented: run an incremental embeddings rebuild before applying edits, so semantic-search recall can never drift more than 7 days even if the `mark_embedding_pending.py` PostToolUse hook misses signals. Incremental, not `--rebuild`.
 
 ```bash
 python3 $SECOND_BRAIN_ROOT/scripts/sb_embed.py index
@@ -510,7 +489,8 @@ Present final report:
 - **Auto-apply by default** — mechanical/factual corrections go through without asking
 - **Calibration loop** — when judgment calls arise, ask user "should this auto-apply next time?" and persist to memory
 - **Carry-over with age escalation** — items flagged but unresolved across runs aren't rediscovered; they're tracked in the calibration register and escalated to ACTION REQUIRED after 3 runs. Prevents the "same judgment call, surfaced and forgotten, every week" failure mode.
-- **Agent A owns the full orientation surface** — including INTELLECTUAL_LANDSCAPE, ORIENTATION, Wiki↔IL bridge, and CLAUDE.md ACTIVE REMINDERS routing. Adding a 4th agent would be simpler on paper; folding Wiki/IL into Doc Coherence is more honest about what "coherence" means.
+- **Agent A owns the full orientation surface** — including INTELLECTUAL_LANDSCAPE, ORIENTATION, the intent-drift check against INTENT_SPEC.md, CLAUDE.md ACTIVE REMINDERS routing, and (if present) the Wiki↔IL bridge. Adding a 4th agent would be simpler on paper; folding these into Doc Coherence is more honest about what "coherence" means.
+- **Intent drift is a weekly check, not a quarterly retrospective** — the Owner Intent in INTENT_SPEC.md is the yardstick; accretion that drifts from it gets surfaced while the drift is one judgment call wide, not a junk drawer deep.
 - **Dead-reference grep** — orientation docs reference each other by filename; the skill verifies those targets exist every run. Cheap, catches drift early.
 - **Aged drift threshold (7 days)** — same-day uncommitted changes are active work, not drift. The skill only warns about shadow state that's been sitting ≥ 7 days, so running maintenance mid-session doesn't produce noise.
 - **Pre-compute git data once** — lead runs git commands, passes output to all 3 agents as context
@@ -528,8 +508,6 @@ Present final report:
 | `Orientation_Docs/INTELLECTUAL_LANDSCAPE.md`        | If Wiki↔IL backport or table refresh needed     |
 | Any file with stale references or dead cross-refs                | If auto-apply fixes found                       |
 | `memory/maintenance-calibration.md`                              | Always (carry-over register update)             |
-| `Reference/Agentic_Market_Catalog.md`               | If service count changed >10%                   |
-| `memory/reference_agentic_market.md`                             | If catalog rebuilt (update count in description) |
 
 ## Integration
 

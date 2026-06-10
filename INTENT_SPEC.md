@@ -1,9 +1,9 @@
 ---
 depth: 1
 ---
-<!-- APPROVED master. Lives in the real brain (Projects/Stripped_Brain/) as the source of truth.
-     Transfer a copy to the handout repo root as INTENT_SPEC.md once the repo relocation completes.
-     Owner Intent ships as __FILL_FROM_USER__ markers for /setup to fill. -->
+<!-- The spec everything else in this repo serves. Architecture intent is fixed prose;
+     Owner Intent ships as __FILL_FROM_USER__ markers for /setup to fill (and for you to
+     re-author freely — see /setup's "make the spec yours" phase). -->
 
 # Second Brain — Intent
 
@@ -37,13 +37,14 @@ What it does, for any owner, is turn that scattered output — notes, voice memo
 
 ## Owner Intent (`__FILL_FROM_USER__` — elicited by `/setup`, revised as the brain grows)
 
-The section above is fixed: it's the intent of the *architecture*. This section is **yours**, and it's what makes the spec a live instrument rather than a manifesto. `/setup` interviews you to fill it; revisit it whenever your brain's purpose sharpens.
+The section above is fixed: it's the intent of the *architecture*. This section is **yours**, and it's what makes the spec a live instrument rather than a manifesto. `/setup` interviews you to fill it — and seeds a **monthly intent check-in** reminder: once a month, re-read this section, score the brain against your success criteria, and revise whatever has drifted. A spec nobody re-reads is a manifesto; the check-in is what keeps it an instrument.
 
 - **What this brain is for (you):** `__FILL_FROM_USER__:brain_purpose`
 - **The gaps it fills — what you're weak at that it should cover:** `__FILL_FROM_USER__:gaps_filled`
 - **Your goals — what acting on this brain should produce in your life and work:** `__FILL_FROM_USER__:owner_goals`
 - **Success looks like:** `__FILL_FROM_USER__:success_criteria`
 - **Explicit non-goals — what you do NOT want this to become:** `__FILL_FROM_USER__:owner_non_goals`
+- **How your agent should communicate with you:** `__FILL_FROM_USER__:agent_comms_style` (reply length and density, push back vs. just execute, decisions in chat vs. written docs — this shapes every single interaction, so it's a first-class preference, not a nicety; mirrored into `MEMORY.md` so it loads every session)
 - **Your privacy register — the one-line test for "too private to share":** `__FILL_FROM_USER__:privacy_register` (calibrated in `Orientation_Docs/PRIVACY_DEPTH.md`)
 - **Your toolchain — the services and tools you want the brain to orchestrate:** `__FILL_FROM_USER__:toolchain` (your cloud/deploy provider, GitHub, the agents and apps you live in)
 - **Credentials to wire in (names only — secrets live in `.env`, never in this file):** which credentials you'll provide so the brain can act for you — GitHub, deployment (e.g. fly.io / your cloud), API keys: `__FILL_FROM_USER__:credentials_to_wire`

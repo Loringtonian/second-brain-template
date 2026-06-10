@@ -33,6 +33,7 @@ Action: **load nothing extra.** Read only the specific source files the task req
 Triggers: "what's on deck", "what's next", project status queries, "where does X live", "show me the brain", "what should I work on", priorities, near-term direction, any reference to a top-level brain folder, any "navigate me through the projects" prompt.
 
 Action: silently `Read` all of:
+- `INTENT_SPEC.md` (repo root — the Owner Intent section is the owner's stated purpose, gaps, and success criteria)
 - `Orientation_Docs/ORIENTATION.md`
 - `Orientation_Docs/SECOND_BRAIN_MASTER_INDEX.md`
 - `Orientation_Docs/STATE_OF_SECOND_BRAIN.md`
@@ -42,7 +43,9 @@ Action: silently `Read` all of:
 (Why this is here, not in Rule 3: when the owner asks "what's next" they want project state
 *and* near-term direction, not just status. `INTELLECTUAL_LANDSCAPE_LITE.md` is already
 in Tier 0 so you also have their life context. The vision doc + TODOs together are the
-"where am I going" half — they belong with status.)
+"where am I going" half — they belong with status. And `INTENT_SPEC.md`'s Owner Intent is
+the yardstick the rest is measured against: "what should I work on" is only answerable
+relative to what the owner said this brain is *for*.)
 
 ### Rule 3 — Deep intellectual / strategic / biographical / personal-data analysis → TIER 2
 Triggers (any of these):
