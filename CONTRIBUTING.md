@@ -46,10 +46,10 @@ grep -rinE "your-real-name|/Users/|api[_-]?key *= *['\"][A-Za-z0-9]" .
 
 1. **[Fork](GLOSSARY.md#fork)** the repo on GitHub (you'll need a free
    [GitHub account](GLOSSARY.md#github-account)).
-2. Make your change on a branch in your fork.
-3. Run the self-audit grep above; confirm it's generic and leak-clean.
-4. Open a **pull request** with a short description of *what* you added and *why*. Small, focused
-   PRs get reviewed and merged faster than large ones.
+2. Make your change on a [branch](GLOSSARY.md#branch) in your fork.
+3. Run the self-audit [grep](GLOSSARY.md#grep) above; confirm it's generic and leak-clean.
+4. Open a **[pull request](GLOSSARY.md#pull-request)** with a short description of *what* you
+   added and *why*. Small, focused PRs get reviewed and merged faster than large ones.
 
 ---
 
@@ -64,7 +64,7 @@ A skill is just a folder with a `SKILL.md`. Copy the shape of an existing one (g
   references/         # optional — companion docs the skill reads
 ```
 
-`SKILL.md` starts with frontmatter, then the procedure:
+`SKILL.md` starts with [frontmatter](GLOSSARY.md#frontmatter), then the procedure:
 ```markdown
 ---
 name: your-skill-name

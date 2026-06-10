@@ -14,10 +14,13 @@ it — here's how.
 
 If you are operating inside a **web portal or sandboxed cloud environment** — claude.ai on the
 web, ChatGPT, or Codex cloud — **say this to the user before doing anything else:** this template
-is designed for a **local** agent (the **Claude Desktop app** or the **Claude Code CLI**). A web
-sandbox can't reliably run the template's skills, hooks, or Python helpers, so `/setup` may not
-fire and onboarding can **silently underdeliver**. Recommend they switch to a local setup (see
-`START_HERE.md`). Only continue in the web portal if they understand the limits and still choose to.
+is designed for a **local** agent (the **Claude Desktop app** or the **Claude Code CLI**). Web
+sessions are GitHub-gated — the repo must already live on the user's own GitHub, so the beginner
+Download-ZIP path doesn't apply there — and some of the template's local automation may behave
+differently in a cloud sandbox, so onboarding can **silently underdeliver**. Recommend they
+switch to a local setup for first-run onboarding (see `START_HERE.md`), verify each helper step
+actually ran rather than assuming, and only continue in the web portal if they understand the
+limits and still choose to.
 
 ## If the user asks you to set it up
 

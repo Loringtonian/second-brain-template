@@ -15,6 +15,11 @@ One project's folder of files on GitHub. This template is a single repo.
 A free login on GitHub. You **don't** need one to download this template (use *Download ZIP*),
 but it's handy for getting updates and contributing back.
 
+### Git
+The program that tracks versions of files; GitHub is the website built around it. Macs include
+it already; on Windows you install it once from
+[git-scm.com/downloads/win](https://git-scm.com/downloads/win) (defaults are fine).
+
 ### Clone
 Making a copy of a repo onto your computer using Git. If that sounds technical, skip it — just
 *Download ZIP* instead.
@@ -23,6 +28,14 @@ Making a copy of a repo onto your computer using Git. If that sounds technical, 
 Your *own* copy of someone's repo on GitHub that you can change freely. You fork when you want
 to improve the template and offer the changes back.
 
+### Branch
+A parallel line of work inside a repo — you make changes on a branch so the main copy stays
+untouched until you're ready.
+
+### Pull request
+A proposal on GitHub to merge your changes into the original repo. You describe what you changed
+and why, and the maintainers review it.
+
 ### Download ZIP
 The no-account way to get these files: the green **`< > Code`** button on the repo page →
 **Download ZIP** → double-click the file to unzip it.
@@ -30,6 +43,21 @@ The no-account way to get these files: the green **`< > Code`** button on the re
 ### Terminal (command line)
 A text window where you type commands instead of clicking buttons. Powerful — but **you can
 avoid it entirely** by using the Claude Desktop app.
+
+### CLI (command line interface)
+A program you use by typing commands in a terminal instead of clicking buttons. "The Claude Code
+CLI" just means Claude Code run from a terminal.
+
+### PowerShell
+Windows' built-in terminal app. Open it by typing "PowerShell" in the Start menu.
+
+### grep
+A search command that finds lines of text inside files. When a doc says "grep for X," it means
+"search the files for X" — your AI assistant runs it for you.
+
+### Sandbox
+A sealed-off workspace where a program runs without touching the rest of your computer. Web and
+cloud AI sessions run inside one — safe, but more limited than running locally.
 
 ### Claude Code
 Anthropic's AI coding assistant: the thing that reads this repo and runs the setup. It comes as
@@ -82,6 +110,10 @@ private. `/setup` creates it for you from `.env.example`.
 ### Markdown (.md)
 A simple way to write formatted text using plain symbols (`#` for a heading, `-` for a bullet).
 Every note in this brain is a Markdown file.
+
+### Frontmatter
+The small block between `---` lines at the very top of a Markdown file, holding settings — like
+a skill's name and description, or a note's `depth:` privacy label.
 
 ### Template A / B / C
 The three note types. **A** = your own original thinking (kept word-for-word). **B** = someone

@@ -1,6 +1,7 @@
 # Second Brain Template — Python dependencies
 # Installed automatically by the /setup environment bootstrap:
-#     python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
+#     macOS/Linux: python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
+#     Windows:     py -m venv .venv; .venv\Scripts\pip install -r requirements.txt
 # See SETUP.md for which skill/script needs which package.
 
 # --- Core: make the out-of-the-box image skills run ---

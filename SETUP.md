@@ -40,7 +40,10 @@ see the [GLOSSARY](GLOSSARY.md#virtual-environment-venv)) and installs them for 
 to do it by hand:
 
 ```bash
+# macOS / Linux
 python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
+# Windows (PowerShell)
+py -m venv .venv; .venv\Scripts\pip install -r requirements.txt
 ```
 
 Heavier extras (`simple-lama-inpainting` for `/remove-watermark --lama`, `sentence-transformers`
