@@ -58,7 +58,7 @@ add it under a `hooks` key in `settings.json` (see the Claude Code hooks docs). 
 Treat them as patterns to adapt, not guaranteed-runnable code.
 
 - `validate_template_b.py` — auto-validates Template B files on Write/Edit (uses the bundled validator).
-- `precompact_checkpoint.py`, `verify_reminder.py`, `breadcrumb_detect.py`, `mark_embedding_pending.py`, `check_inbox.py` — small reflex hooks; adapt paths/triggers to your setup.
+- `precompact_checkpoint.py`, `verify_reminder.py`, `breadcrumb_detect.py`, `mark_embedding_pending.py`, `check_inbox.py` — small reflex hooks; adapt paths/triggers to your setup. (`verify_reminder.py` reads `.claude/hooks/verify_registry.json`, which ships with an empty project list — register each browser-based project there to activate the Browser Verification Protocol reminders from `CLAUDE.md`.)
 - `trace_tokens.py` + `analyze_token_trace.py` + `arm_/disarm_trace_oneshot.py` — an optional token-usage profiler (`touch /tmp/token_trace.active` to start a trace).
 
 ## Companion tools — what your brain can plug into

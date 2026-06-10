@@ -1,0 +1,10 @@
+{
+  "_doc": "Registry for the Browser Verification Protocol (see CLAUDE.md) and the verify_reminder.py hook. Add one entry per browser-based project under 'projects'; the hook stays silent while this list is empty. Fields: name = short slug (used for the reminder cooldown lockfile), dir_prefix = path substring that identifies the project's files, verify_md = path to the project's VERIFY.md, port = dev-server port to check.",
+  "_example": {
+    "name": "my_dashboard",
+    "dir_prefix": "Projects/My_Dashboard/app",
+    "verify_md": "Projects/My_Dashboard/app/VERIFY.md",
+    "port": 8080
+  },
+  "projects": []
+}
