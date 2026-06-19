@@ -6,6 +6,8 @@
 
 > **New here, or not very technical?** Start with **[START_HERE.md](START_HERE.md)** — a plain-English, no-jargon setup guide (the easiest path is the **Claude Desktop app**, no terminal needed). Stuck on a word like *clone* or *virtual environment*? See the **[GLOSSARY](GLOSSARY.md)**. Want to help this grow into a community project? See **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 
+> **Feels like too much? Try the one-prompt version.** If a full template is more than you want, start with the **[second-brain-seed](https://github.com/Loringtonian/second-brain-seed)** — a single `SEED.md` that an agent reads to grow a brain from scratch by interviewing you, with no template to strip down. It points back here as the reference architecture for when you're ready to go deeper.
+
 This repo is not a notes app and not a finished product. It's a battle-tested *architecture* for a Claude Code "second brain," reduced to its skeleton: the rules, the context-routing logic, the document templates, the skills, and the hooks — everything that teaches a fresh agent how to operate inside a personal knowledge base, with none of the content filled in yet.
 
 Every place your own content goes is marked `__FILL_FROM_USER__`. The whole thing is designed to be cloned and filled in *with the help of an agent* — the docs themselves carry instructions addressed to the AI that will onboard you.
