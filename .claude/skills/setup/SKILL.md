@@ -222,7 +222,10 @@ Also ask, batched:
   archive, bookmarks), point them at `/mine` — it **triages the source, then calibrates the agent's
   judgment on small batches** before the bulk pass, so thousands of items don't get mis-filed on the
   agent's cold first guess. This is principle "calibrate the AI judgement early" made runnable; full loop
-  in `Orientation_Docs/MINING.md`.
+  in `Orientation_Docs/MINING.md`. Before pointing them at it, **size it up**
+  (`scripts/estimate_tokens.py <path> --budget <plan>`) against their plan — a whole-Drive-sized export
+  read in one pass can exhaust a limited plan in a single session, so stage it across quota resets if
+  it's large.
 
 ### Phase 9 — Make the spec yours
 `INTENT_SPEC.md` has two halves: a fixed **architecture intent** (what this kind of brain is and why)

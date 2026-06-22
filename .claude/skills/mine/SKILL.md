@@ -45,6 +45,7 @@ Copy and track:
 
 ```
 - [ ] PHASE 0 — TRIAGE
+      - [ ] Budget it: estimate the source's token size (`scripts/estimate_tokens.py <path> --budget <plan>`) vs the owner's plan; if reading it all blows the session, stage it across quota resets
       - [ ] Categorize the whole source into coarse keep/skip bins by kind
       - [ ] Sample each skip-bin (~10 items) with a one-line observation
       - [ ] STOP — owner approves each bin (propose, don't decide)
@@ -93,6 +94,12 @@ Copy and track:
 
 ## Phase 0 — Triage
 
+- **Budget it first.** Estimate how much reading the source in full would cost —
+  `python3 scripts/estimate_tokens.py <path> --budget <plan-tokens>` — and weigh it against the owner's
+  plan (Claude Pro vs Max, or an API budget). If reading everything would blow one session window, plan
+  to **stage** the mine across quota resets (a Pro ~5-hour window, overnight, week's end) and use a
+  cheap/fast model for the bulk reading. Sizing up front is what stops a single import from burning the
+  whole plan.
 - Categorize the whole source into coarse bins by kind (keep kinds vs skip kinds).
 - For each skip-bin, pull ~10 items, state a one-line observation, and present the sample.
 - **Stop for the owner's approval per bin** — "skip it" / "sample more" / "keep these." No bin is
@@ -127,6 +134,7 @@ For each batch:
 
 | Skill / script | When | Status |
 |---|---|---|
+| `scripts/estimate_tokens.py` | Phase 0 — size the source vs the plan before reading | core |
 | `/verify-idea` | Per item — duplicate detection before creating a file | core |
 | `/process-content` | The per-item segment → classify → Template-create mechanic | core |
 | `.claude/scripts/validate_template.py` | Validate created files in the bulk pass | recommended |

@@ -28,6 +28,13 @@ brain and a noisy one. Spend the time early — it pays back across the whole ar
 
 The agent **proposes; you decide.** Nothing is processed in bulk until you approve.
 
+**First, budget it.** Estimate what reading the whole source would cost —
+`python3 scripts/estimate_tokens.py <path> --budget <plan-tokens>` — and weigh it against the owner's
+plan (Claude Pro vs Max, or an API budget). If reading everything would blow one session window,
+**stage** the mine across quota resets (a Pro ~5-hour window, overnight, week's end) and use a
+cheap/fast model for the bulk reading. The triage below decides *what* to read; this decides *how much
+at once* — and it's what stops a single import from burning the whole plan.
+
 1. **Categorize the whole source** into a handful of coarse bins by kind — the *keep* kinds (your
    original thinking, ideas, substantive notes) and the *skip* kinds (one-off factual lookups,
    admin/logistics, pure image requests, empty or duplicate items).
